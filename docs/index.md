@@ -5,7 +5,10 @@ layout: home
 hero:
   name: "LAFEN"
   text: "🍒Personal Blog🍒"
-  tagline: My great project tagline
+  tagline: My Study Notes
+  image:
+    src: /logo.svg
+    alt: Lafen
   actions:
     - theme: brand
       text: Markdown Examples
