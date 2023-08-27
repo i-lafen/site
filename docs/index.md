@@ -11,11 +11,11 @@ hero:
     alt: Lafen
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Http
+      link: /http/
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Javascript
+      link: /javascript/
 
 features:
   - title: 基本功
