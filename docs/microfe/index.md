@@ -9,4 +9,6 @@
 - **single-spa**
 
 
+:::tip
 当然社区中也已经有了 `vite` 的模块联邦的插件提供，即 `vite-plugin-federation` ，与 `webpack5 module federation` 提供的 `api` 基本一致
+:::
