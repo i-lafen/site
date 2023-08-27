@@ -12,7 +12,7 @@ const init = async () => {
       const sourcePath = path.join(sourceDir, file.name)
       const destPath = path.join(destDir, file.name)
       await fs.promises.copyFile(sourcePath, destPath)
-      console.log(`%c[copy success]${file.name} has been copied to ${destDir}`, 'color: green')
+      console.log(`[copy success]：${file.name} has been copied to ${destDir}`)
     }
   } catch (err) {
     console.error(err)
