@@ -9,7 +9,7 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "dev": "npm run docs:dev",
-    "build": "npm run docs:build",
+    "build": "npm run docs:build && node build.js",
     "preview": "npm run docs:preview",
     "push": "git add . && git commit -m 'build' && git push",
     "auto": "npm run build && npm run push"
