@@ -165,7 +165,7 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
 
-    logo: base + 'logo.svg',
+    logo: 'logo.svg',
 
     nav,
     sidebar,
