@@ -3,6 +3,6 @@
   --vp-home-hero-image-filter: blur(60px);
 }
 
-html.dark img {
+html.dark img:not(.VPImage) {
   filter: brightness(0.6);
 }
