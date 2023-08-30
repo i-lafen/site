@@ -558,7 +558,7 @@ type t = InstanceType<typeof C>; // C
 
 先看一个典型的例子，以下例子会警告类型不存在属性
 
-```ts
+```typescript
 type Student = {
   name: string;
   type: string;
@@ -587,7 +587,7 @@ const fn = (p: People) => {
 
 给 `isTecher` 显式添加返回值类型，并使用 `is` ， 这样 `fn` 中调用 `isTecher` 后， `p` 的类型就收窄为了 `Techer`
 
-```ts
+```typescript
 const isTecher = (p: People): p is Techer => {
   return p.type === 'techer'
 }
@@ -599,7 +599,7 @@ const isTecher = (p: People): p is Techer => {
 
 ### never 判断
 
-```ts
+```typescript
 type IsNever<T> = [T] extends [never] ? true : false
 
 type T50 = IsNever<never>  // true

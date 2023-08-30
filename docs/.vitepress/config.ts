@@ -68,6 +68,7 @@ const nav = [
       { text: 'Browser', link: '/browser/' },
       { text: 'V8-gc', link: '/browser/v8-gc' },
       { text: 'Eventloop', link: '/browser/eventloop' },
+      { text: 'Node Eventloop', link: '/browser/node-eventloop' },
       { text: 'Asyncapi', link: '/browser/asyncapi' },
       { text: 'Layer', link: '/browser/layer' },
       { text: 'Extension', link: '/browser/extension' }
@@ -93,26 +94,11 @@ const nav = [
       { text: 'Curry', link: '/javascript/curry' },
       { text: 'Tail-call', link: '/javascript/tail-call' },
       { text: 'Sparse-array', link: '/javascript/sparse-array' },
-      { text: 'Code', link: '/javascript/code' }
-    ]
-  },
-  {
-    text: 'Promise',
-    link: '/promise/',
-    items: [
-      { text: 'Promise', link: '/promise/' },
-      { text: 'All', link: '/promise/all' },
-      { text: 'Promise', link: '/promise/promise' },
-      { text: 'Promisify', link: '/promise/promisify' },
-      { text: 'Max-request', link: '/promise/max-request' }
-    ]
-  },
-  {
-    text: 'Node',
-    link: '/node/',
-    items: [
-      { text: 'Node', link: '/node/' },
-      { text: 'Eventloop', link: '/node/eventloop' }
+      { text: 'Code', link: '/javascript/code' },
+      { text: 'Promise.all', link: '/javascript/all' },
+      { text: 'Promise', link: '/javascript/promise' },
+      { text: 'Promisify', link: '/javascript/promisify' },
+      { text: 'Max-request', link: '/javascript/max-request' }
     ]
   },
   {
