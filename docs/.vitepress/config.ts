@@ -148,6 +148,7 @@ export default defineConfig({
   description: "🍒Personal Blog🍒",
   head: [['link', { rel: 'icon', href: base + 'logo.svg' }]],
   lastUpdated: true,
+  cleanUrls: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
 
