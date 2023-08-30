@@ -47,7 +47,8 @@ const nav = [
       { text: 'Unbuild', link: '/engineering/unbuild' },
       { text: 'Webpack', link: '/engineering/webpack' },
       { text: 'Gulp', link: '/engineering/gulp' },
-      { text: 'Cli', link: '/engineering/cli' }
+      { text: 'Cli', link: '/engineering/cli' },
+      { text: 'Vue', link: '/engineering/vue' }
     ]
   },
   {
@@ -60,7 +61,6 @@ const nav = [
       { text: 'Wujie', link: '/microfe/wujie' }
     ]
   },
-  { text: 'Vue', link: '/vue/' },
   {
     text: 'Browser',
     link: '/browser/',

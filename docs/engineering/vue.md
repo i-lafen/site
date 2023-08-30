@@ -15,7 +15,7 @@
 
 ## vue3 中 ref、toRef、toRefs 区别 
 
-[官网文档]: https://v3.cn.vuejs.org/api/refs-api.html#ref
+[官网文档](https://cn.vuejs.org/api/reactivity-utilities.html)
 
 - `ref` 用于定义 简单值类型 的 具有响应式 的数据。也常用于定义数组类型。
 - `toRef` 用于对 `reactive` 类型数据 的 某个属性 新创建一个 `ref`
@@ -40,6 +40,7 @@
 - 移除 `$on`、`$off`、`$once` 实例方法
 - 异步加载组件， 由 `import` 增加 `defineAsyncComponent`
 - 多事件， 可同时绑定多个事件，逗号连接
+- 新增 `v-memo` 指令优化数据渲染
 - `Composition API`
   - `reactive`
   - `ref`
@@ -65,7 +66,7 @@
 
 ## vue3 比 vue2 快
 
-[模板编译]: https://template-explorer.vuejs.org/
+[模板编译](https://template-explorer.vuejs.org/)
 
 - `Proxy` 响应式
   - 响应式数据的惰性监听，只监听初始渲染的可见部分的数据，惰性监听
@@ -98,10 +99,10 @@
 
 ## vite 为何启动快
 
-- 开发环境 使用 `es6 module`，无需打包，非常快
-- 生产环境 使用 `rollup`，实际并不会快很多
+- 开发环境 使用 `es6 module` 特性 与 `esbuild` 等，无需打包，非常快
+- 生产环境 使用 `rollup` ， 配合 `esbuild` 进行编译、压缩等操作
 
-由此 `vite` 的缺点也很明显，就是开发环境、生产环境不统一 导致的某些问题较难排查。且目前生态不及 `webpack`
+由此 `vite` 的缺点也很明显，就是开发环境、生产环境不统一 导致的某些问题较难排查。且目前生态不及 `webpack` ， 但这些问题都随着更新而抹平
 
 
 

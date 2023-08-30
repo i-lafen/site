@@ -43,7 +43,7 @@
 - vite-plugin-federation 模块联邦
 
 
-## 3D 可视化
+## 框架
 
-- threejs
-- echarts
+- vue
+- react
