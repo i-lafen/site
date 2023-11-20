@@ -309,7 +309,7 @@ function injectCustomJs(jsPath) {
 
 常规简易 `web` 程序，未做具体打包事项。
 
-插件开发时主要在于各个 `js` 文件之间的通信关系，主要功能根据 `yapi` 接口文档生成相应的 `ts` 类型，主要涉及的关键点如下：
+插件开发时主要在于捋清各个 `js` 文件之间的通信关系，以及数据结构的处理，主要功能根据 `yapi` 接口文档生成相应的 `ts` 类型，主要涉及的关键点如下：
 
 - 数据拦截
   - 插件根目录必须 `manifest.json` 文件，相关配置可以看以上文章
@@ -322,6 +322,11 @@ function injectCustomJs(jsPath) {
   - 使用 `json-schema-to-typescript` 对数据进行 `ts` 类型转换
   - 使用 `monaco-editor` 将 `ts` 类型显示到 `popup` 上
 
+- 效果如下
+  - 生成接口入参、出参 `ts` 类型 及 注释
+  ![extension](./images/extension.jpg)
+  - 生成 `api` 方法 和 对应的 `yapi` 地址
+  ![extension-2](./images/extension-2.jpg)
 
 
 ## Sources
