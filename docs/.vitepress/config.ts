@@ -3,128 +3,128 @@ import { NavItem, SidebarMulti } from './type'
 
 const nav = [
   {
-    text: 'LeetCode',
     link: '/leetcode/',
+    text: 'LeetCode',
     items: [
-      { text: 'Leetcode', link: '/leetcode/' },
-      { text: 'Link', link: '/leetcode/link' },
-      { text: 'Tree', link: '/leetcode/tree' },
-      { text: 'Array', link: '/leetcode/array' },
-      { text: 'String', link: '/leetcode/string' },
-      { text: 'Pointer', link: '/leetcode/pointer' },
-      { text: 'Number', link: '/leetcode/number' },
-      { text: 'Dp', link: '/leetcode/dp' },
-      { text: 'Lru', link: '/leetcode/lru' }
+      { link: '/leetcode/', text: 'Leetcode' },
+      { link: '/leetcode/link', text: 'Link' },
+      { link: '/leetcode/tree', text: 'Tree' },
+      { link: '/leetcode/array', text: 'Array' },
+      { link: '/leetcode/string', text: 'String' },
+      { link: '/leetcode/pointer', text: 'Pointer' },
+      { link: '/leetcode/number', text: 'Number' },
+      { link: '/leetcode/dp', text: 'Dp' },
+      { link: '/leetcode/lru', text: 'Lru' }
     ]
   },
   {
     text: 'Http',
     link: '/http/',
     items: [
-      { text: 'Http', link: '/http/' },
-      { text: 'Tcp-ip-udp', link: '/http/tcp-ip-udp' },
-      { text: 'Http', link: '/http/http' },
-      { text: 'Https', link: '/http/https' },
-      { text: 'Cache', link: '/http/cache' },
-      { text: 'Csp', link: '/http/csp' },
-      { text: 'Hand', link: '/http/hand' },
-      { text: 'Url-to-page', link: '/http/url-to-page' }
+      { link: '/http/', text: 'Http' },
+      { link: '/http/tcp-ip-udp', text: 'Tcp-ip-udp' },
+      { link: '/http/http', text: 'Http' },
+      { link: '/http/https', text: 'Https' },
+      { link: '/http/cache', text: 'Cache' },
+      { link: '/http/csp', text: 'Csp' },
+      { link: '/http/hand', text: 'Hand' },
+      { link: '/http/url-to-page', text: 'Url-to-page' }
     ]
   },
-  { text: 'TypeScript', link: '/typescript/' },
+  { link: '/typescript/', text: 'TypeScript' },
   {
-    text: 'Engineering',
     link: '/engineering/',
+    text: 'Engineering',
     items: [
-      { text: 'Engineering', link: '/engineering/' },
-      { text: 'Module', link: '/engineering/module' },
-      { text: 'Base', link: '/engineering/base' },
-      { text: 'Package', link: '/engineering/package' },
-      { text: 'Monorepo', link: '/engineering/monorepo' },
-      { text: 'Eslint', link: '/engineering/eslint' },
-      { text: 'Gitflow', link: '/engineering/gitflow' },
-      { text: 'Vite', link: '/engineering/vite' },
-      { text: 'Unbuild', link: '/engineering/unbuild' },
-      { text: 'Webpack', link: '/engineering/webpack' },
-      { text: 'Gulp', link: '/engineering/gulp' },
-      { text: 'Cli', link: '/engineering/cli' },
-      { text: 'Vue', link: '/engineering/vue' }
+      { link: '/engineering/', text: 'Engineering'},
+      { link: '/engineering/module', text: 'Module' },
+      { link: '/engineering/base', text: 'Base' },
+      { link: '/engineering/package', text: 'Package' },
+      { link: '/engineering/monorepo', text: 'Monorepo' },
+      { link: '/engineering/eslint', text: 'Eslint' },
+      { link: '/engineering/gitflow', text: 'Gitflow' },
+      { link: '/engineering/vite', text: 'Vite' },
+      { link: '/engineering/unbuild', text: 'Unbuild' },
+      { link: '/engineering/webpack', text: 'Webpack' },
+      { link: '/engineering/gulp', text: 'Gulp' },
+      { link: '/engineering/cli', text: 'Cli' },
+      { link: '/engineering/vue', text: 'Vue' }
     ]
   },
   {
-    text: 'Micro FE',
     link: '/microfe/',
+    text: 'Micro FE',
     items: [
-      { text: 'Microfe', link: '/microfe/' },
-      { text: 'Federation', link: '/microfe/federation' },
-      { text: 'Microapp', link: '/microfe/microapp' },
-      { text: 'Wujie', link: '/microfe/wujie' }
+      { link: '/microfe/', text: 'MicroFE' },
+      { link: '/microfe/federation', text: 'Federation' },
+      { link: '/microfe/microapp', text: 'MicroApp' },
+      { link: '/microfe/wujie', text: 'WuJie' }
     ]
   },
   {
-    text: 'Browser',
     link: '/browser/',
+    text: 'Browser',
     items: [
-      { text: 'Browser', link: '/browser/' },
-      { text: 'V8-gc', link: '/browser/v8-gc' },
-      { text: 'Eventloop', link: '/browser/eventloop' },
-      { text: 'Node Eventloop', link: '/browser/node-eventloop' },
-      { text: 'Asyncapi', link: '/browser/asyncapi' },
-      { text: 'Layer', link: '/browser/layer' },
-      { text: 'Extension', link: '/browser/extension' }
+      { link: '/browser/', text: 'Browser' },
+      { link: '/browser/v8-gc', text: 'V8-gc' },
+      { link: '/browser/eventloop', text: 'Eventloop' },
+      { link: '/browser/node-eventloop', text: 'Node Eventloop' },
+      { link: '/browser/asyncapi', text: 'Asyncapi' },
+      { link: '/browser/layer', text: 'Layer' },
+      { link: '/browser/extension', text: 'Extension' }
     ]
   },
   {
-    text: 'JavaScript',
     link: '/javascript/',
+    text: 'JavaScript',
     items: [
-      { text: 'JavaScript', link: '/javascript/' },
-      { text: 'Js', link: '/javascript/js' },
-      { text: 'Hoisting', link: '/javascript/hoisting' },
-      { text: 'Stack', link: '/javascript/stack' },
-      { text: 'Scope', link: '/javascript/scope' },
-      { text: 'Scope-chain', link: '/javascript/scope-chain' },
-      { text: 'This', link: '/javascript/this' },
-      { text: 'New', link: '/javascript/new' },
-      { text: 'Instanceof', link: '/javascript/instanceof' },
-      { text: 'Call-apply-bind', link: '/javascript/call-apply-bind' },
-      { text: 'Throttle-debounce', link: '/javascript/throttle-debounce' },
-      { text: 'Deep-clone', link: '/javascript/deep-clone' },
-      { text: 'Chain', link: '/javascript/chain' },
-      { text: 'Curry', link: '/javascript/curry' },
-      { text: 'Tail-call', link: '/javascript/tail-call' },
-      { text: 'Sparse-array', link: '/javascript/sparse-array' },
-      { text: 'Code', link: '/javascript/code' },
-      { text: 'Promise.all', link: '/javascript/all' },
-      { text: 'Promise', link: '/javascript/promise' },
-      { text: 'Promisify', link: '/javascript/promisify' },
-      { text: 'Max-request', link: '/javascript/max-request' }
+      { link: '/javascript/', text: 'JavaScript' },
+      { link: '/javascript/js', text: 'Js' },
+      { link: '/javascript/hoisting', text: 'Hoisting' },
+      { link: '/javascript/stack', text: 'Stack' },
+      { link: '/javascript/scope', text: 'Scope' },
+      { link: '/javascript/scope-chain', text: 'Scope-chain' },
+      { link: '/javascript/this', text: 'This' },
+      { link: '/javascript/new', text: 'New' },
+      { link: '/javascript/instanceof', text: 'Instanceof' },
+      { link: '/javascript/call-apply-bind', text: 'Call-apply-bind' },
+      { link: '/javascript/throttle-debounce', text: 'Throttle-debounce' },
+      { link: '/javascript/deep-clone', text: 'Deep-clone' },
+      { link: '/javascript/chain', text: 'Chain' },
+      { link: '/javascript/curry', text: 'Curry' },
+      { link: '/javascript/tail-call', text: 'Tail-call' },
+      { link: '/javascript/sparse-array', text: 'Sparse-array' },
+      { link: '/javascript/code', text: 'Code' },
+      { link: '/javascript/all', text: 'Promise.all' },
+      { link: '/javascript/promise', text: 'Promise' },
+      { link: '/javascript/promisify', text: 'Promisify' },
+      { link: '/javascript/max-request', text: 'Max-request' }
     ]
   },
   {
-    text: 'Css',
     link: '/css/',
+    text: 'Css',
     items: [
-      { text: 'Css', link: '/css/' },
-      { text: 'Flex', link: '/css/flex' },
-      { text: 'Grid', link: '/css/grid' },
-      { text: 'Scoped', link: '/css/scoped' },
-      { text: 'Wind', link: '/css/wind' },
-      { text: 'Mobile', link: '/css/mobile' },
-      { text: 'Margin', link: '/css/margin' },
-      { text: 'Inline-block', link: '/css/inline-block' },
-      { text: 'Bfc', link: '/css/bfc' },
-      { text: 'Center', link: '/css/center' }
+      { link: '/css/', text: 'Css' },
+      { link: '/css/flex', text: 'Flex' },
+      { link: '/css/grid', text: 'Grid' },
+      { link: '/css/scoped', text: 'Scoped' },
+      { link: '/css/wind', text: 'Wind' },
+      { link: '/css/mobile', text: 'Mobile' },
+      { link: '/css/margin', text: 'Margin' },
+      { link: '/css/inline-block', text: 'Inline-block' },
+      { link: '/css/bfc', text: 'Bfc' },
+      { link: '/css/center', text: 'Center' }
     ]
   },
   {
-    text: 'Web',
     link: '/web/',
+    text: 'Web',
     items: [
-      { text: 'Web', link: '/web/' },
-      { text: 'Pattern', link: '/web/pattern' },
-      { text: 'Threejs', link: '/web/threejs' },
-      { text: 'Interview', link: '/web/interview' }
+      { link: '/web/', text: 'Web' },
+      { link: '/web/pattern', text: 'Pattern' },
+      { link: '/web/threejs', text: 'Threejs' },
+      { link: '/web/interview', text: 'Interview' }
     ]
   }
 ] as NavItem[]
@@ -167,6 +167,7 @@ export default defineConfig({
     },
 
     socialLinks: [{ icon: 'github', link: 'https://gitee.com/lafen' }],
+
     footer: {
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2023-present LAFEN'
