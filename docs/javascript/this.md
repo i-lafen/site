@@ -147,9 +147,9 @@ var myObj = new CreateObj()
 ```js
 var myObj = {
   name : "极客时间", 
-  showThis: function(){
+  showThis: function() {
     console.log(this)
-    function bar(){
+    function bar() {
       console.log(this)
     }
     bar()
@@ -169,10 +169,10 @@ myObj.showThis()
 ```js
 var myObj = {
   name : "极客时间", 
-  showThis: function(){
+  showThis: function() {
     console.log(this)
     var self = this
-    function bar(){
+    function bar() {
       self.name = "极客邦"
     }
     bar()
@@ -190,7 +190,7 @@ var myObj = {
   name : "极客时间", 
   showThis: function(){
     console.log(this)
-    var bar = ()=>{
+    var bar = () => {
       this.name = "极客邦"
       console.log(this)
     }

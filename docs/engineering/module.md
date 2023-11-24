@@ -90,7 +90,7 @@ require(['moduleA', 'moduleB'], function(moduleA, moduleB) {
 - `CMD` 推崇依赖就近， `AMD` 推崇依赖前置
 
 
-## ES6Module
+## ES6 Module
 
 浏览器原生模块化方案，使用方式如下
 
@@ -135,8 +135,8 @@ sum()
 
 ## CommonJs 和 ES6Module 差异
 
-- `CommonJs` 输出的是一个值的拷贝， `ES6Module` 是值的引用
-- `CommonJs` 是动态加载， `ES6Module` 是静态加载，编译时就确定了依赖关系，所以 `ES6Module` 能够支持 `tree shaking`
+- `CommonJs` 输出的是一个值的拷贝， `ES6 Module` 是值的引用
+- `CommonJs` 是动态加载， `ES6 Module` 是静态加载，编译时就确定了依赖关系，所以 `ES6 Module` 能够支持 `tree shaking`
 
 
 ## umd

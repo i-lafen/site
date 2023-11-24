@@ -127,7 +127,7 @@ pnpm install utils --filter cli
 pnpm install unbuild -w -D
 ```
 
-根目录已经子项目下 `package.json` 分别新建 `scripts`
+根目录和子项目下 `package.json` 分别新建 `scripts`
 
 `monorepo-demo/package.json`
 
