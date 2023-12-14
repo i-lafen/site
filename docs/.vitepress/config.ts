@@ -44,6 +44,7 @@ const nav = [
       { link: '/engineering/eslint', text: 'Eslint' },
       { link: '/engineering/gitflow', text: 'Gitflow' },
       { link: '/engineering/vite', text: 'Vite' },
+      { link: '/engineering/vite-plugin', text: 'Vite Plugin' },
       { link: '/engineering/unbuild', text: 'Unbuild' },
       { link: '/engineering/webpack', text: 'Webpack' },
       { link: '/engineering/gulp', text: 'Gulp' },
