@@ -110,6 +110,6 @@ export default defineConfig({
 
 ## Source
 
-[Vite](https://cn.vitejs.dev/guide/api-plugin.html#authoring-a-plugin)
+- [Vite](https://cn.vitejs.dev/guide/api-plugin.html#authoring-a-plugin)
 
-[Vite 插件开发](https://juejin.cn/post/7276260308515389480#heading-3)
+- [Vite 插件开发](https://juejin.cn/post/7276260308515389480#heading-3)

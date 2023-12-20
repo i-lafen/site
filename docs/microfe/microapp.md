@@ -316,13 +316,13 @@ const logoImg = process.env.NODE_ENV === 'production'
 
 [micro-app](https://micro-zoe.github.io/micro-app/)已更新至 `1.x beta` 版，兼容 `vite` 子应用不需要再进行过多的修改处理。
 
-micro-app 借鉴 webcomponent 的思想，通过 CustomElement 结合自定义的 ShadowDom ，将微前端封装成一个类 WebComponent 组件，实现微前端的组件化渲染。
+`micro-app` 借鉴 `WebComponent` 的思想，通过 `CustomElement` 结合自定义的 `ShadowDom` ，将微前端封装成一个类 `WebComponent` 组件，实现微前端的组件化渲染。
 
-- js 沙箱
+- `js` 沙箱
 
-  与 qiankun 一样， micro-app 采用 proxy + with 的沙箱方案，但也使用 Object.defineProperty 定义全局变量，以减少 proxy 带来的性能损耗
+  与 `qiankun` 一样， `micro-app` 采用 `proxy` + `with` 的沙箱方案，但也使用 `Object.defineProperty` 定义全局变量，以减少 `proxy` 带来的性能损耗
 
-- css 隔离
+- `css` 隔离
 
   通过给子应用添加属性选择器来实现样式隔离，例如
 
@@ -339,11 +339,11 @@ micro-app 借鉴 webcomponent 的思想，通过 CustomElement 结合自定义�
 
 - 虚拟路由系统
 
-  自定义 location 和 history 等核心路由 api ，重写了 popState 和 hashChange 事件，拦截导航和事件。基座应用能方便的获取子应用的路由信息并控制子应用跳转，子应用的路由信息也会作为参数同步到浏览器地址栏
+  自定义 `location` 和 `history` 等核心路由 `api` ，重写了 `popState` 和 `hashChange` 事件，拦截导航和事件。基座应用能方便的获取子应用的路由信息并控制子应用跳转，子应用的路由信息也会作为参数同步到浏览器地址栏
 
-- vite 的兼容
+- `vite` 的兼容
 
-  之前的版本要支持 vite 必须关闭沙箱，因为 vite 打包出来的 esm 类型的 js 文件，无法运行在 with 环境中，故采用了 iframe 沙箱方案做兼容。
+  之前的版本要支持 `vite` 必须关闭沙箱，因为 `vite` 打包出来的 esm 类型的 `js` 文件，无法运行在 `with` 环境中，故采用了 `iframe` 沙箱方案做兼容。
 
 
 
