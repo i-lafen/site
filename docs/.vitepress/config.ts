@@ -59,7 +59,8 @@ const nav = [
       { link: '/microfe/', text: 'MicroFE' },
       { link: '/microfe/federation', text: 'Federation' },
       { link: '/microfe/microapp', text: 'MicroApp' },
-      { link: '/microfe/wujie', text: 'WuJie' }
+      { link: '/microfe/wujie', text: 'WuJie' },
+      { link: '/microfe/compare', text: 'Compare' }
     ]
   },
   {

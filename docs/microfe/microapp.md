@@ -343,7 +343,7 @@ const logoImg = process.env.NODE_ENV === 'production'
 
 - `vite` 的兼容
 
-  之前的版本要支持 `vite` 必须关闭沙箱，因为 `vite` 打包出来的 esm 类型的 `js` 文件，无法运行在 `with` 环境中，故采用了 `iframe` 沙箱方案做兼容。
+  之前的版本要支持 `vite` 必须关闭沙箱，因为 `vite` 打包出来的 `esm` 类型的 `js` 文件，无法运行在 `with` 环境中，故采用了 `iframe` 沙箱方案做兼容。
 
 
 
