@@ -3,13 +3,41 @@
 ## diff 过程简单理解
 
 - 每次 `vnode` 都是执行同级比对，不会跨级比较
-- 简单对比，`sameVnode` 函数会判断两个节点是否相同，主要判断 `key`、`tagName`、`id`、`class` 是否相同
-- 设置新旧 `vnode` 首尾指针
-- 新旧 头尾 指针比较，向中间靠拢
+- 快速判断，`isSameVnodeType` 函数会判断两个节点是否相同，主要判断 `type` 、 `key` 是否相同
+- 使用 `isSameVnodeType` 函数**从头到尾**快速判断进行更新，直到遇到不同节点
+- 使用 `isSameVnodeType` 函数**从尾到头**快速判断进行更新，直到遇到不同节点
+- 新、旧节点之间多余节点的对比更新，进行新增或删除
+- 乱序节点，使用最长递增子序列进行查找，更新节点
 - 进行索引添加/位移 直到新或旧节点遍历完毕
 - 剩余部分批量处理 添加/删除
 
 > `vue3` 对 `diff` 过程的优化在于，添加了区分静态类型 `vnode`，如果是 静态类型 的 `vnode`，则跳过更新，直接修改旧 `vnode` 引用 指向新的 `vnode`。
+
+
+
+## vue 中的事件触发器 vei （vue event invoke）
+
+`addEventListener` 和 `removeEventListener` 事件的频繁注册、销毁必定会消耗大量内存时间，故 `vue` 中使用 `vei` 来做事件的注册销毁，简单来说就是动态修改事件回调函数，即 `invoke.value` ， 简易示例如下代码
+
+```js
+// invoke，实际执行的是 invoke.value ，修改事件代码只需重新赋值 invoke.value 即可
+var invoke = () => {
+  invoke.value()
+}
+
+// 事件挂载
+invoke.value = () => {
+  console.log('事件1执行')
+}
+
+// 注册一次 click 事件即可
+el.addEventListener('click', invoke)
+
+// 事件重新挂载，而不用重新 removeEventListener 后再 addEventListener
+invoke.value = () => {
+  console.log('事件2执行')
+}
+```
 
 
 
