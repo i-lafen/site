@@ -57,7 +57,7 @@
 
 - 主应用、子应用使用成本低，组件式使用，支持子应用嵌套
 - 支持保活模式、单例模式、重建模式，支持多应用加载，并保持子应用路由同步的能力
-- 加载速度快，通过 `requestidlecallback` 支持子应用预加载
+- 加载速度快，通过 `requestIdleCallback` 支持子应用预加载
 - 运行速度快， `js` 运行在 `iframe` 中，无需采用 `with` 方式运行 `js`
 - 实现 `css` 沙箱、 `js` 沙箱的原生隔离
 - `window.parent` 通信、 `props` 数据注入、 `EventBus` 通信
