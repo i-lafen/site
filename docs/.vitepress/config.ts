@@ -60,6 +60,7 @@ const nav = [
       { link: '/microfe/federation', text: 'Federation' },
       { link: '/microfe/microapp', text: 'MicroApp' },
       { link: '/microfe/wujie', text: 'WuJie' },
+      { link: '/microfe/qiankun', text: 'Qiankun' },
       { link: '/microfe/compare', text: 'Compare' }
     ]
   },
