@@ -28,7 +28,8 @@ const nav = [
       { link: '/http/cache', text: 'Cache' },
       { link: '/http/csp', text: 'Csp' },
       { link: '/http/hand', text: 'Hand' },
-      { link: '/http/url-to-page', text: 'Url-to-page' }
+      { link: '/http/url-to-page', text: 'Url-to-page' },
+      { link: '/http/dns', text: 'Dns' }
     ]
   },
   { link: '/typescript/', text: 'TypeScript' },
