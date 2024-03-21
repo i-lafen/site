@@ -126,6 +126,7 @@ const nav = [
     text: 'Web',
     items: [
       { link: '/web/', text: 'Web' },
+      { link: '/web/monitor', text: 'Monitor' },
       { link: '/web/pattern', text: 'Pattern' },
       { link: '/web/threejs', text: 'Threejs' },
       { link: '/web/interview', text: 'Interview' }
