@@ -1,6 +1,11 @@
 :root {
+  /* 首页背景图 */
   --vp-home-hero-image-background-image: linear-gradient(-45deg, #bd34fe 50%, #47caff 50%);
   --vp-home-hero-image-filter: blur(60px);
+
+  /* 首页标题 */
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, #bd34fe 30%, #41d1ff);
 }
 
 html.dark img:not(.VPImage) {
