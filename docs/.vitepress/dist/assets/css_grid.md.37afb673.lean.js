@@ -1,0 +1,1 @@
+import{_ as e,o,c as l,Q as c}from"./chunks/framework.281e52d7.js";const h=JSON.parse('{"title":"Grid","description":"","frontmatter":{},"headers":[],"relativePath":"css/grid.md","filePath":"css/grid.md"}'),d={name:"css/grid.md"},a=c("",20),i=[a];function s(t,r,n,p,u,g){return o(),l("div",null,i)}const f=e(d,[["render",s]]);export{h as __pageData,f as default};

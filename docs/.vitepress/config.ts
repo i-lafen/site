@@ -152,7 +152,7 @@ export default defineConfig({
   title: "LAFEN",
   description: "🍒Personal Blog🍒",
   head: [['link', { rel: 'icon', href: base + 'logo.svg' }]],
-  lastUpdated: true,
+  lastUpdated: false,
   cleanUrls: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
