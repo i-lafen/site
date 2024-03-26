@@ -210,4 +210,4 @@
   - `Native` 端直接调用挂载在 `window` 上的全局方法，并可拿到返回值
 - `Web` 向 `Native` 发送消息
   - 拦截式 - `Native` 拦截 `Web` 发出的约定格式的 `URL` 请求，参数从 `URL` 上获取
-  - 注入式（主流） - `Native` 通过 Webview 向 `window` 注入方法， `JS` 能够直接调用 `Native` 的代码逻辑
+  - 注入式 - `Native` 通过 `Webview` 向 `window` 注入方法， `JS` 能够直接调用 `Native` 的代码逻辑，优先使用
