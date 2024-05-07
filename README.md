@@ -1,3 +1,7 @@
-# Blog
+# Persional Blog
 
-Persional Blog , see [Site](https://i-lafen.github.io/site/)
+Blog: https://i-lafen.github.io/site
+
+Github: https://github.com/i-lafen
+
+Gitee: https://gitee.com/lafen
