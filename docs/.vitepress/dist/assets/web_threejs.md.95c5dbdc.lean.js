@@ -1,1 +1,0 @@
-import{_ as s,o as a,c as n,Q as l}from"./chunks/framework.281e52d7.js";const h=JSON.parse('{"title":"Threejs","description":"","frontmatter":{},"headers":[],"relativePath":"web/threejs.md","filePath":"web/threejs.md"}'),p={name:"web/threejs.md"},o=l("",100),e=[o];function t(c,r,E,y,i,d){return a(),n("div",null,e)}const C=s(p,[["render",t]]);export{h as __pageData,C as default};

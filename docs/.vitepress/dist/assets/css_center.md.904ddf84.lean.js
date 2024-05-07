@@ -1,0 +1,1 @@
+import{_ as e,o,c as t,Q as a}from"./chunks/framework.a638f038.js";const m=JSON.parse('{"title":"居中布局","description":"","frontmatter":{},"headers":[],"relativePath":"css/center.md","filePath":"css/center.md"}'),c={name:"css/center.md"},i=a("",7),d=[i];function l(r,n,s,h,_,u){return o(),t("div",null,d)}const b=e(c,[["render",l]]);export{m as __pageData,b as default};

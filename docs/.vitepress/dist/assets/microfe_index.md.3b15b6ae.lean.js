@@ -1,0 +1,1 @@
+import{_ as e,o,c as t,Q as i}from"./chunks/framework.a638f038.js";const f=JSON.parse('{"title":"微前端","description":"","frontmatter":{},"headers":[],"relativePath":"microfe/index.md","filePath":"microfe/index.md"}'),a={name:"microfe/index.md"},n=i("",4),c=[n];function r(s,d,l,_,p,m){return o(),t("div",null,c)}const g=e(a,[["render",r]]);export{f as __pageData,g as default};
