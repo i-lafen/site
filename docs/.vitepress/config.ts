@@ -145,7 +145,7 @@ const sidebar = nav.reduce((res: SidebarMulti, cur: NavItem) => {
   return res
 }, {} as SidebarMulti)
 
-const base = '/site/'
+const base = '/'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -172,7 +172,7 @@ export default defineConfig({
       provider: 'local'
     },
 
-    socialLinks: [{ icon: 'github', link: 'https://gitee.com/lafen' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/i-lafen' }],
 
     footer: {
       message: 'Released under the MIT License.',
