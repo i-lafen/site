@@ -1,0 +1,1 @@
+import{_ as a,o as e,c as t,Q as o}from"./chunks/framework.281e52d7.js";const m=JSON.parse('{"title":"简述三次握手四次挥手","description":"","frontmatter":{},"headers":[],"relativePath":"http/hand.md","filePath":"http/hand.md"}'),l={name:"http/hand.md"},i=o("",11),r=[i];function c(d,h,n,s,_,p){return e(),t("div",null,r)}const f=a(l,[["render",c]]);export{m as __pageData,f as default};

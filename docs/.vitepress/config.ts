@@ -145,7 +145,7 @@ const sidebar = nav.reduce((res: SidebarMulti, cur: NavItem) => {
   return res
 }, {} as SidebarMulti)
 
-const base = '/'
+const base = '/site/'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

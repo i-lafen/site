@@ -1,0 +1,1 @@
+import{_ as a,o as e,c as i,Q as r}from"./chunks/framework.281e52d7.js";const u=JSON.parse('{"title":"Margin 重叠问题","description":"","frontmatter":{},"headers":[],"relativePath":"css/margin.md","filePath":"css/margin.md"}'),o={name:"css/margin.md"},l=r("",9),t=[l];function n(s,c,d,h,_,m){return e(),i("div",null,t)}const f=a(o,[["render",n]]);export{u as __pageData,f as default};
