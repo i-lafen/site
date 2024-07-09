@@ -83,6 +83,7 @@ const nav = [
     text: 'JavaScript',
     items: [
       { link: '/javascript/', text: 'JavaScript' },
+      { link: '/javascript/ts', text: 'TS' },
       { link: '/javascript/typescript', text: 'TypeScript' },
       { link: '/javascript/js', text: 'Js' },
       { link: '/javascript/hoisting', text: 'Hoisting' },
