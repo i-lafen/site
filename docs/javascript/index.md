@@ -37,6 +37,14 @@
 - `call` 、 `apply` 、 `bind`
 
 
+## TypeScript 高级用法
+
+- `unknown` 、 `void` 、 `never` 类型
+- 运算符
+- 泛型基本使用
+- 泛型工具
+- 类型保护 `is`
+
 
 ## JS 代码
 
