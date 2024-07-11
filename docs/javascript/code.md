@@ -196,6 +196,25 @@ versionSort(versions) //  ['10.2.1', '5.1.2', '2.1.0.1', '1.0.4.5', '0.402.1']
 ```
 
 
+## 文件大小单位转换
+
+将文件的 `KB` 单位简化，保留两位小数，例如 `1024KB => 1024MB`
+
+```js
+const formatSizeUnit = (kb) => {
+  const units = ['KB', 'MB', 'GB', 'TB', 'PB']
+  let index = 0
+  while(kb >= 1024 && index < units.length - 1) {
+    kb /= 1024
+    index++
+  }
+  return `${kb.toFixed(2)} ${units[index]}`
+}
+
+formatSizeUnit(1024)
+```
+
+
 ## 数组 转 树
 
 使用 `map` 来缓存 `id` 和 对应的数组元素 `id -> treeItem` ， 遍历时判断 `map` 中是否存在 `parentId` 对应的 `id` ， 存在则将 `treeItem` 保存到 `parentItem.children` 中

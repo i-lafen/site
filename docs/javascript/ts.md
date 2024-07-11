@@ -139,7 +139,7 @@ window.myCustomFunction(); // 输出: This is a custom function on window.
 ## ts 中如何定义第三方模块的类型
 
 - 使用现有的类型定义
-  - 大多数流行的第三方库都有对应的类型包，通常以 `@types/` 为前缀，如 `@types/lodash` ，直接 npm 安装即可
+  - 大多数流行的第三方库都有对应的类型包，通常以 `@types/` 为前缀，如 `@types/lodash` ，直接 `npm` 安装即可
 - 手动编写类型定义
   - 创建 `.d.ts` 文件，例如 `third-party.d.ts`
   - 使用 `declare module` 或 `declare global` 来定义所需类型
