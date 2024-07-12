@@ -70,7 +70,7 @@ const nav = [
     text: 'Browser',
     items: [
       { link: '/browser/', text: 'Browser' },
-      { link: '/browser/v8-gc', text: 'V8-gc' },
+      { link: '/browser/v8-gc', text: 'V8-GC' },
       { link: '/browser/eventloop', text: 'Eventloop' },
       { link: '/browser/node-eventloop', text: 'Node Eventloop' },
       { link: '/browser/asyncapi', text: 'Async Api' },

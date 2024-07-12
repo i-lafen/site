@@ -196,6 +196,30 @@ versionSort(versions) //  ['10.2.1', '5.1.2', '2.1.0.1', '1.0.4.5', '0.402.1']
 ```
 
 
+## 二分查找
+
+双指针从两端向中间查找目标值的位置
+
+```js
+const list = [1, 2, 3, 4, 5, 6, 9, 10, 88]
+
+const findIndex = (arr, target) => {
+  let left = 0, right = arr.length - 1
+  while(left <= right) {
+    const mid = Math.floor((left + right) / 2)
+    if (arr[mid] > target) {
+      right = mid - 1
+    } else if (arr[mid] < target) {
+      left = mid + 1
+    } else {
+      return mid
+    }
+  }
+  return -1
+}
+```
+
+
 ## 文件大小单位转换
 
 将文件的 `KB` 单位简化，保留两位小数，例如 `1024KB => 1024MB`
