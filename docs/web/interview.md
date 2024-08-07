@@ -421,3 +421,33 @@ highPrecisionTimer(() => {
 ```
 
 当然这也并不是精准的计时器，大量的计算同样可能会导致页面卡顿阻塞，因此需要做一些取舍。同样也可以在 `webworker` 当中做计时，但是在与主线程通信过程中同样会因耗时而导致误差。
+
+
+
+## Promise.withResolvers() 简介
+
+通常在 `Promise` 中使用 `resolve` 和 `reject` 来控制 `Promise` 的状态，但是如果需要延迟 `resolve` 时就可以将其赋值到外面
+
+```js
+let _resolve, _reject
+const p = new Promise((resolve, reject) => {
+  // 将 resolve 和 reject 赋值到外面，在外面得到结果后再调用
+  _resolve = resolve
+  _reject = reject
+})
+
+p.then(res => console.log('resolve：', res))
+
+// 获取到数据后再 resolve
+setTimeout(() => _resolve('获取到的数据'), 1000)
+```
+
+但是如果每次都要定义外部变量来接收 `resolve` 和 `reject` 显得不那么优雅，那么就可以使用 `Promise.withResolvers()`，就没有必要定义外部变量了
+
+```js
+const { promise, resolve, reject } = Promise.withResolvers()
+
+promise.then(res => console.log('resolve：', res))
+
+setTimeout(() => resolve('获取到的数据'), 1000)
+```
