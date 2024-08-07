@@ -115,6 +115,22 @@ invoke.value = () => {
 
 
 
+## nextTick 在 vue2 和 vue3 中的实现区别
+
+- `vue2` 中为了兼容性，使用了几个异步 `api` 来实现
+  - `Promise`
+  - `MutationObserver`
+  - `setImmediate`
+  - `setTimeout`
+- `vue3` 中则不考虑兼容性，直接使用了 `Promise` 来实现
+  ```ts
+  export function nextTick(fn?: () => void): Promise<void> {
+    return fn ? p.then(fn) : p
+  }
+  ```
+
+
+
 ## 为何使用 Proxy 代替 Object.defineProperty
 
 - `Object.defineProperty` 检测不到对象属性的添加和删除；`Proxy` 能监听整个对象多达 `13` 种操作。

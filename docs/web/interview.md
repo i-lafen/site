@@ -121,6 +121,21 @@
 
 
 
+## nextTick 在 vue2 和 vue3 中的实现区别
+
+- `vue2` 中为了兼容性，使用了几个异步 `api` 来实现
+  - `Promise`
+  - `MutationObserver`
+  - `setImmediate`
+  - `setTimeout`
+- `vue3` 中则不考虑兼容性，直接使用了 `Promise` 来实现
+  ```ts
+  export function nextTick(fn?: () => void): Promise<void> {
+    return fn ? p.then(fn) : p
+  }
+  ```
+
+
 
 ## websocket 链接
 
@@ -317,7 +332,7 @@ console.log(generator.next().done);  // 输出: true，表示迭代器已完成
 - `IndexedDB` 是浏览器提供的本地数据库
 - `WebSocket` 需要服务端支持，但能实现不同浏览器间的数据同步，在线文档类的需求中常见使用
 
-### 实际场景
+### 某种特殊实际场景
 
 在实际项目中，有些实时性的系统数据并不想保存在 `localStorage` 中永久保存，而是希望保存在随窗口消失的 `sessionStorage` 中，以便能够每次打开系统时都能重新请求保存
 
@@ -375,3 +390,34 @@ async function main() {
 }
 main()
 ```
+
+
+
+## js 实现高精度计时器
+
+主要问题在于 `setTimeout` 和 `setInterval` 并不能做到很精确的计时器。这两个 `api` 在时间到了时候只是将回调函数注册到异步队列等待执行，一旦遇到耗时任务则可能会导致延迟执行。另外窗口非活跃状态（切换或隐藏窗口）下，浏览器也会减少 `js` 执行以节省资源。
+
+但也可以使用 `Date` 来计算前后任务之间的时间差来减少误差。
+
+```js
+function highPrecisionTimer(callback, interval) {
+  let startTime = Date.now();
+  function loop() {
+    let currentTime = Date.now();
+    let elapsedTime = currentTime - startTime;
+    if (elapsedTime >= interval) {
+      startTime += interval; // 更新下一次的起始时间
+      callback(); // 执行回调
+    }
+    requestAnimationFrame(loop); // 继续循环
+  }
+  requestAnimationFrame(loop);
+}
+
+// 使用示例
+highPrecisionTimer(() => {
+  console.log('每秒执行一次');
+}, 1000);
+```
+
+当然这也并不是精准的计时器，大量的计算同样可能会导致页面卡顿阻塞，因此需要做一些取舍。同样也可以在 `webworker` 当中做计时，但是在与主线程通信过程中同样会因耗时而导致误差。
