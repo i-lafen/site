@@ -77,12 +77,77 @@
 
 
 
+## 资源提示符
+
+- `script` 标签上（异步获取资源）
+  - `async` 异步获取资源，获取到资源就立即执行，此时的 `dom` 解析可能未完成
+  - `defer` 异步获取资源，获取完后会等待 `dom` 解析完毕后再执行
+- `link` 标签上（提起获取资源）
+  - `preload` 提示浏览器预加载资源，加载完并不运行，还是需要使用 `link` 标签去使用，优先级较高，一般用于加载本页 `js` 、 `css` 资源
+  - `prefetch` 提示浏览器预加载资源，加载完并不运行，还是需要使用 `link` 标签去使用，优先级较低，一般用于加载非本页 `js` 、 `css` 资源
+
+
 
 ## 前端埋点方案
 
 - `new Image()` 方式上传，无跨域问题，不挂载页面不影响页面，采用 `1` 像素的 `gif` 图体积较小
 - `navigator.sendBeacon(url, data)` 方法上传一些统计和诊断数据，不受页面卸载影响，不影响下一个页面的载入，可优先使用此方法来做埋点上传， `new Image()` 做兜底
 
+
+
+## 浏览器指纹
+
+在用户未登录的情况下，利用浏览器版本、环境信息，电脑系统版本、环境信息，网络信息等生成一个唯一标识，用于标记用户以统计或推送推荐和广告等。
+
+- 通常情况下自己可以使用 `canvas` 来生成浏览器指纹，它基于不同浏览器在渲染 `canvas` 元素时的像素渲染细微差异来生成一个独特的标识符。
+- 也可以使用 `fingerprintjs` 库来生成浏览器指纹。
+
+以下是利用 `canvas` 生成浏览器指纹的示例代码
+```js
+// 获取 hashCode 简易方法
+const hashCode = (str) => {
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i)
+    hash = (hash << 5) - hash + char
+    hash |= 0 // 将 hash 转换为 32 位整数
+  }
+  return hash
+}
+
+// 通过 canvas 生成浏览器指纹
+const getCanvasFingerprint = () => {
+  // 创建 canvas 元素
+  const canvas = document.createElement('canvas')
+  canvas.width = 200
+  canvas.height = 200
+
+  // 获取 canvas 上下文
+  const ctx = canvas.getContext('2d')
+
+  // 设置绘图样式
+  ctx.fillStyle = 'rgb(128, 0, 0)'
+  ctx.fillRect(10, 10, 100, 100) // 绘制一个红色矩形
+
+  ctx.fillStyle = 'rgb(0, 128, 0)'
+  ctx.fillRect(50, 50, 100, 100) // 绘制一个绿色矩形
+
+  ctx.strokeStyle = 'rgb(0, 0, 128)'
+  ctx.lineWidth = 5
+  ctx.strokeRect(30, 30, 80, 80) // 绘制一个蓝色边框的矩形
+
+  ctx.font = '20px Arial'
+  ctx.fillStyle = 'rgb(0, 0, 0)'
+  ctx.fillText('Hello!', 60, 110) // 在图形上绘制文本
+
+  // 转换为 DataURL，这将是一个包含图像数据的 base64 字符串
+  const dataURL = canvas.toDataURL()
+
+  // 对 dataURL 进行 hash 处理，以生成更短且一致的浏览器指纹
+  const hash = hashCode(dataURL)
+  return hash
+}
+```
 
 
 
