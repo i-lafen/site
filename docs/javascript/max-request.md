@@ -1,7 +1,60 @@
-# JS 最大请求并发数与大文件上传
+# JS 异步并发数控制与大文件上传
 
 
-## js 控制最大请求并发数
+## js 异步并发数控制1
+
+```js
+// 简易并发池
+class TaskPool {
+  // 限制最大并发数
+  max = 0
+  // 当前正在执行的异步任务数
+  cur = 0
+  // 任务队列
+  tasks = []
+  constructor(num = 3) {
+    this.max = num
+  }
+  // 添加任务并执行
+  add(task) {
+    this.tasks.push(task)
+    this.run()
+  }
+  // 执行
+  run() {
+    // 判断当前正在执行的任务数 以及 剩余任务数，取出任务执行
+    while (this.cur < this.max && this.tasks.length) {
+      const task = this.tasks.shift()
+      this.cur++
+      task()
+        .then(res => console.log(res))
+        .finally(() => { 
+          this.cur--
+          this.run()
+        })
+    }
+  }
+}
+
+// 新建实例
+const taskpool = new TaskPool(3)
+
+// 生成异步任务
+for (let i = 0; i < 10; i++) {
+  const task = () => new Promise(resolve => {
+    setTimeout(() => {
+      console.log(`task-${i}-resolve`);
+      resolve(`task-${i}`)
+    }, 1000)
+  })
+
+  // 进入并发池执行
+  taskpool.add(task)
+}
+```
+
+
+## js 请求并发数控制2
 
 ```js
 // 模拟 api
