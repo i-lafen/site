@@ -185,3 +185,8 @@ const setDataJson = (data) => {
 ```
 
 
+## Finally
+
+- [fabric-editor-demo](https://gitee.com/lafen/fabric-editor-demo)
+- [fabricjs 官网](http://fabricjs.com/)
+- [fabricjs 官网 demo](http://fabricjs.com/demos/)
