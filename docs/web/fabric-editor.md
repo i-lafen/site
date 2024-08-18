@@ -19,9 +19,11 @@
 
 本文对应代码使用 `vue3` 做示例，详见 [fabric-editor-demo](https://gitee.com/lafen/fabric-editor-demo)
 
+⚠️但是需要注意 `vue3` 项目中给画布添加元素，要使用 `markRaw` 将元素标记为原生对象，否则元素的缩放会失效⚠️详见[🅰️ttention❗](#🅰️ttention❗)
+
 ### 初始化画布
 
-下载依赖 fabric 并初始化画布
+下载依赖 `fabric` 并初始化画布
 
 ```vue
 <script setup>
@@ -77,10 +79,38 @@ const shape = new fabric[type]({
   radius : 50 // 圆形半径
 })
 
+// ⚠️ 标记为原生对象再 add ⚠️
+const shapeRaw = markRaw(shape)
 // 渲染到画布
-canvasRef.value.add(shape)
+canvasRef.value.add(shapeRaw)
 // 设置选中
-cavasRef.value.setActiveObject(shape)
+cavasRef.value.setActiveObject(shapeRaw)
+```
+
+#### 🅰️ttention❗
+
+`vue3` 项目中，响应式对象会将 `add` 的元素转成 `Proxy` ，会导致元素控件无法响应，即无法缩放和删除等操作，所以需要使用 `vue3` 提供的 `markRaw` 将元素标记 `add` 的元素为原生对象，代码如下
+
+```js
+// 画布实例为响应式对象 🕳️
+const canvasRef = ref(null)
+canvasRef.value = new fabric.Canvas('c')
+
+// 创建一个文本元素
+const shape = new fabric.IText('注意', {
+  text: '文字编辑',
+  width : 60,
+  height : 60,
+  fill : '#0066ccff',
+  stroke: '#8822cc00',
+  strokeWidth: 0,
+  left: 20,
+  top: 20
+})
+// ⚠️ 标记为原生对象再 add 😂
+const shapeRaw = markRaw(shape)
+canvasRef.value.add(shapeRaw)
+canvasRef.value.setActiveObject(shapeRaw)
 ```
 
 
