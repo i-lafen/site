@@ -22,7 +22,7 @@ features:
     details: TS | JS | ES6 | 变量提升 | 执行上下文 | 变量环境 | 词法环境 | 调用栈 | 作用域 | 作用域链 | 词法作用域 | 闭包 | This
     icon: 📝
   - title: 浏览器
-    details: 浏览器插件 | V8 垃圾回收 | Event Loop 事件循环 | RequestAnimationFrame/RequestIdleCallback | Session 多标签共享
+    details: 浏览器插件 | V8 垃圾回收 | Event Loop 事件循环 | RequestAnimationFrame/RequestIdleCallback | Session 多标签共享 | fabric
     icon: 💻
   - title: 框架
     details: Vue | Vite | Unbuild

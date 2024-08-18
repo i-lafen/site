@@ -131,6 +131,7 @@ const nav = [
       { link: '/web/monitor', text: 'Monitor' },
       { link: '/web/pattern', text: 'Pattern' },
       { link: '/web/session-share', text: 'Session Share' },
+      { link: '/web/fabric-editor', text: 'Fabric Editor' },
       { link: '/web/threejs', text: 'ThreeJs' },
       { link: '/web/interview', text: 'Interview' }
     ]
