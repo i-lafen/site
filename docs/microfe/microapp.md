@@ -324,7 +324,7 @@ const logoImg = process.env.NODE_ENV === 'production'
 
 - `css` 隔离
 
-  通过给子应用添加属性选择器来实现样式隔离，例如
+  除了 `shadow dom` ，还可以通过给子应用添加属性选择器来实现样式隔离，例如
 
   ```css
   main {

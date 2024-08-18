@@ -23,17 +23,109 @@
 
 ## qiankun 常见问题
 
-### 1、qiankun 工作原理
+### qiankun 工作原理
 
 - 基于 `single-spa`
 - 应用加载： `qiankun` 通过动态创建 `script` 标签方式加载子应用的入口文件，加载完毕会执行子应用暴露出来的生命周期函数
 - 生命周期： 子应用需要暴露 `bootstrap` 、 `mount` 、 `unmount` 三个生命周期
-- 沙箱隔离： `qiankun` 通过 `Proxy` 对象创建一个 `js` 沙箱，用于隔离子应用的全局变量，防止子应用之间的全局变量污染
-- 样式隔离： `qiankun` 通过动态添加移除 `style` 标签的方式实现样式隔离，子应用启动时加载，卸载时移除
+- 沙箱隔离： `qiankun` 对于 `js` 沙箱 包含 快照沙箱、单应用沙箱、`proxy` 沙箱 三种沙箱方案可用，对于不同环境采用不同方案
+- 样式隔离： `qiankun` 的样式隔离主要为 `shadow dom` 隔离 以及 `scoped css` 隔离
 - 通信机制： 提供全局通信机制，允许子应用之间进行通信
 
 
-### 2、qiankun 中如何处理子应用的静态资源加载问题
+### qiankun 的 2 种 css 沙箱方案
+
+`qiankun` 主要使用 `shadow dom` 和 `scoped css` 来实现 `css` 隔离
+
+1. `shadow dom`
+
+    可以创建一个封闭的 `dom` 结构，这个 `dom` 对外部隔离，包括 `css` ， `qiankun` 在挂载子应用时，会将子应用的 `html` 元素挂载到 `shadow dom` 上，从而实现 `css` 隔离。`shadow dom` 隔离方案可能会有兼容性问题。
+
+```js
+// qiankun使用Shadow DOM挂载子应用
+const container = document.getElementById('container')
+const shadowRoot = container.attachShadow({ mode: 'open' })
+shadowRoot.innerHTML = '<div id="subapp-container"></div>'
+```
+
+
+2. `css module`
+
+    对 `style` 元素的 `css` 文本进行处理，在原有选择器上添加属性选择器
+
+
+
+### qiankun 的 3 种 js 沙箱方案
+
+`qiankun` 中提供 `3` 种 `js` 沙箱方案
+
+- `SnapshotSanbox` 快照沙箱（单例模式）
+  - 子应用 `mount` 时
+    - 首先判断是否恢复该子应用环境 `window` ，没有则跳过
+    - 然后浅复制主应用的 `window` 快照，用于下次恢复主应用环境
+  - 子应用 `unmount` 时
+    - 将当前子应用的 `window` 和 上次记录的子应用的快照 `window` 进行 `diff` ，将 `diff` 结果用于下次恢复子应用环境
+    - 将上次记录的主应用的 `window` 快照拷贝到主应用的 `window` 上，以此来恢复环境
+- `LegacySanbox` 兼容沙箱（单例模式）
+  - 使用 `Proxy` 监听，在子应用 新增和修改 `window.xx` 时直接记录 `diff` ，将其用于环境恢复
+  - **解决快照沙箱的性能问题**，快照沙箱每次 `diff` 都是全量的，而兼容沙箱不用，所以快照沙箱性能更好
+- `ProxySandbox` 代理沙箱
+  - 为每个子应用分配一个 `fakeWindow` ，当子应用操作 `window` 时，其实是在 `fakeWindow` 上操作，这样就能实现多应用激活了
+  - 子应用在 修改 和 获取 全局属性时，原生属性从全局 `window` 上操作，不是原生属性则优先从 `fakeWindow` 上操作。即 `window.xx` 实际上为 `window.proxy.xx`
+
+
+### qiankun 数据通信
+
+- `qiankun` 官方提供的通信方式 `EventBus`
+  - `globalState` 全局变量
+  - `setGlobalState` 修改数据
+  - `onGlobalStateChange` 注册监听
+  - `offGlobalStateChange` 取消监听
+- **自己实现一套通信机制**
+  - 使用原生的 `CustomEvent` 或类似的第三方库来派发和监听自定义事件
+  - 定义一个全局变量和 `on` 、 `emit` 方法
+
+```js
+// 示例代码
+window.globalEvent = {
+  events: {},
+  emit(event, data) {
+    if (!this.events[event]) {
+      return;
+    }
+    this.events[event].forEach(callback => callback(data));
+  },
+  on(event, callback) {
+    if (!this.events[event]) {
+      this.events[event] = [];
+    }
+    this.events[event].push(callback);
+  },
+};
+```
+
+#### micro-app 通信机制
+相比之下，`micro-app` 比 `qiankun` 的通信机制好一点点，不过也比较繁琐
+- 父传子
+  - 主应用 `microApp.setData('sub-app-name', data)`
+  - 子应用 `microApp.addDataListener` 监听，主动获取则使用 `microApp.getData()`
+- 子传父
+  - 子应用 `microApp.dispatch`
+  - 主应用 则在组件上监听 `@dataChange` 事件
+
+
+### qiankun 的资源加载机制（import-html-entry）
+
+`import-html-entry` 是 `qiankun` 框架中用于加载子应用的 `html` 入口文件的工具函数，可以方便的将子应用的 `html` 入口作为模块加载。它实现了以下功能
+- 加载 `html` 入口文件： `import-html-entry` 会通过创建一个 `link` 标签来加载子应用的 `html` 入口文件，确保子应用的资源得到正确加载
+- 解析 `html` 入口文件： 解析入口文件内容，提取出子应用的 `js` 和 `css` 资源的 `url`
+- 动态加载 `js` 和 `css` 资源： 动态创建 `script` 和 `link` ，按照正确顺序加载子应用资源
+- 创建沙箱环境： 在加载子应用的 `js` 资源时，创建一个沙箱环境，用于隔离 `js`
+- 返回子应用的入口模块： `import-html-entry` 返回一个函数，可以在主应用中调用以加载和启动子应用
+
+
+
+### qiankun 中如何处理子应用的静态资源加载问题
 
 #### 1、使用公共路径
 
@@ -76,7 +168,7 @@ beforeMount: app => {
 emmm...
 
 
-### 3、简述 qiankun 的 start 函数的作用和参数
+### 简述 qiankun 的 start 函数的作用和参数
 
 - **prefetch** ： 预加载模式
   - `true` ，默认值，主应用 `start` 之后即开始预加载所有子应用的静态资源
@@ -93,7 +185,7 @@ emmm...
 - **fetch** ： 自定义的 `fetch` 方法，用于加载子应用的静态资源
 
 
-### 4、js 沙箱不能解决的 js 污染问题
+### js 沙箱不能解决的 js 污染问题
 
 `qiankun` 的 `js` 沙箱主要时通过代理 `window` 对象来实现的，但给 `body` 标签添加点击事件时， `js` 沙箱并不能消除它的影响。
 
@@ -114,7 +206,7 @@ export async function unmount() {
 ```
 
 
-### 5、qiankun 如何实现 keep-alive 的需求
+### qiankun 如何实现 keep-alive 的需求
 
 `qiankun` 在子应用卸载时会将环境还原到子应用加载前的状态，以防止子应用对全局的污染，这种设计理念和 `keep-alive` 的需求是相悖的。
 
@@ -154,7 +246,7 @@ function restoreState(state) {
 手动加载子应用，不直接卸载，直接隐藏 `dom`
 
 
-### 6、qiankun 和 iframe 优劣选择
+### qiankun 和 iframe 优劣选择
 
 两者都是很成熟的微前端解决方案， `qiankun` 功能强大，应对复杂场景更灵活， `iframe` 使用简单，无兼容问题
 
@@ -163,7 +255,7 @@ function restoreState(state) {
 如果是传统 `jquery` 项目则优先考虑 `iframe` 为佳，但需考虑通信问题、性能问题
 
 
-### 7、qiankun 多个子应用调试问题
+### qiankun 多个子应用调试问题
 
 对于如何同时启动多个子应用，可以考虑使用 `npm-run-all` 这个工具来串行或并行来执行你的脚本。
 
@@ -186,105 +278,54 @@ npm install --save-dev npm-run-all
 ```
 
 
-### 8、qiankun如何实现 css 隔离，优缺点是什么，还有其他方案吗
+### 子项路由目的 hash 和 history 如何处理
 
-`qiankun` 主要使用 `shadow dom` 来实现 `css` 隔离
-
-1. `shadow dom` 可以创建一个封闭的 `dom` 结构，这个 `dom` 对外部隔离，包括 `css` ， `qiankun` 在挂载子应用时，会将子应用的 `html` 元素挂载到 `shadow dom` 上，从而实现 `css` 隔离
-
-```js
-// qiankun使用Shadow DOM挂载子应用
-const container = document.getElementById('container')
-const shadowRoot = container.attachShadow({ mode: 'open' })
-shadowRoot.innerHTML = '<div id="subapp-container"></div>'
-```
-
-`shadow dom` 隔离方案可能会有兼容性问题。
-
-2. `css module` 样式隔离
-3.  `BEM` 命名规范隔离
-
-
-### 9、qiankun 项目间通信
-
-- **Actions 通信**， `qiankun` 官方提供的通信方式
-  - `setGlobalState` 设置 `globalState`
-  - 通过 `onGlobalStateChange` 和 `offGlobalStateChange` 注册和取消观察全局变量从而实现通信
-- **自己实现一套通信机制**
-  - 使用原生的 `CustomEvent` 或类似的第三方库来派发和监听自定义事件
-  - 定义一个全局变量和 `on` 、 `emit` 方法
-
-```js
-// 示例代码
-window.globalEvent = {
-  events: {},
-  emit(event, data) {
-    if (!this.events[event]) {
-      return;
-    }
-    this.events[event].forEach(callback => callback(data));
-  },
-  on(event, callback) {
-    if (!this.events[event]) {
-      this.events[event] = [];
-    }
-    this.events[event].push(callback);
-  },
-};
-```
-
-
-### 10、子项路由目的 hash 和 history 如何处理
-
-`qiankun` 推荐使用 `history` 模式，子应用之间的跳转也是通过主应用的 `router` 对象或原生的 `history` 对象进行。
+`qiankun` 推荐使用 `history` 模式，子应用之间的跳转也是通过主应用的 `router` 对象 或 原生的 `history` 对象进行。
 
 - 主应用使用 `history` 模式，子应用可使用 `hash` 和 `history` 模式，可使用 `router` 对象跳转
 - 主应用使用 `hash` 模式，子应用跳转就需要借助原生的 `history` 对象了
 
 
-### 11、qiankun 中应用之间如何复用依赖， npm 包除外
+主应用切换路由时，子应用不跳转问题 的主要原因就是
+- `vue-router` 和 `react-router` 都对 `push` 函数做了优化，优先使用 `history.pushState` ，否则使用 `window.location.hash = xxx` ，而 `pushState` 是不会派发 `hashChange` 事件的，从而导致子应用没有捕获到对应的 `hashChange` 事件，因此无法做路由切换，对此有 `2` 种方式解决
+  - 使用 `dispatch(new Event('hashchange'))` 来手动派发事件，让子应用能够捕获到它
+  - 将 `<router-link>` 转换为 `<a>` 标签
+
+
+
+### qiankun 中应用之间如何复用依赖， npm 包除外
 
 - 公共依赖指定为外部依赖，打包时配置 `externals` 选项
 - 统一的 `cdn` 文件，加载时先从缓存中获取
 - 子应用资源设置 `script` 标签的 `ignore` 属性，主应用加载时会忽略，子应用独立运行时会正常加载
 
 
-### 12、qiankun 的资源加载机制（import-html-entry）
 
-`import-html-entry` 是 `qiankun` 框架中用于加载子应用的 `html` 入口文件的工具函数，可以方便的将子应用的 `html` 入口作为模块加载。它实现了以下功能
-- 加载 `html` 入口文件： `import-html-entry` 会通过创建一个 `link` 标签来加载子应用的 `html` 入口文件，确保子应用的资源得到正确加载
-- 解析 `html` 入口文件： 解析入口文件内容，提取出子应用的 `js` 和 `css` 资源的 `url`
-- 动态加载 `js` 和 `css` 资源： 动态创建 `script` 和 `link` ，按照正确顺序加载子应用资源
-- 创建沙箱环境： 在加载子应用的 `js` 资源时，创建一个沙箱环境，用于隔离 `js`
-- 返回子应用的入口模块： `import-html-entry` 返回一个函数，可以在主应用中调用以加载和启动子应用
-
-
-
-### 13、几种微前端框架的优缺点
+### 几种微前端框架的优缺点
 
 #### qiankun
 
 - 优点
-  - 降低应用改造成本，通过 `html entry` 方式引入子应用
-  - 提供完备的 `js` 、 `css` 沙箱方案
+  - 通过子应用入口文件进行加载子应用
+  - 提供 快照沙箱、兼容沙箱、代理沙箱 三种 `js` 沙箱方案
+  - 提供 `shadow dom` 、 `scoped css` 两种 `css` 沙箱方案
   - 支持静态资源预加载
   - 社区活跃度高
 - 缺点
   - 适配成本较高，包括工程化、生命周期、静态资源路径补全、路由等方面的适配
-  - 无法同时激活多个子应用，不支持子应用保活
-  - 不支持 `vite` 等 `esmodule` 脚本呢运行，需要配合插件
+  - 不支持 `vite` 等 `esmodule` 脚本运行，需要配合插件
 
 
 #### micro-app
 
 - 优点
-  - 使用 `webcomponent` 加载子应用
-  - 复用大量验证过的 `qiankun` 沙箱机制，提高框架可靠性
-  - 支持子应用保活
-  - 降低子应用改造成本，提供静态资源预加载能力
+  - 使用 `webcomponent` 加载子应用，使用方式倾向于组件化
+  - 复用大量验证过的 `qiankun` 沙箱机制
+  - 支持子应用 `keep-alive`
+  - 提供数据通信机制，使用比 `qiankun` 好一点点
+  - 提供静态资源预加载能力
 - 缺点
   - 多应用激活后也无法保持各个子应用的路由状态，刷新后丢失
-  - `css` 沙箱无法完全隔离，需配合命名规范
   - 支持 `vite` 运行，但必须使用 `plugin` 改在子应用，且 `js` 无法做沙箱隔离
   - 对于不支持 `webcomponent` 的浏览器未做降级处理
 
