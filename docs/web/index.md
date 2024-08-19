@@ -6,5 +6,5 @@
 - 跨标签页通信方式 和 `sessionStorage` 共享思路
 - 基于 `fabric` 的画布编辑器
 - `Threejs`
-- `vitepress`
+- `VitePress`
 - `Interview`
