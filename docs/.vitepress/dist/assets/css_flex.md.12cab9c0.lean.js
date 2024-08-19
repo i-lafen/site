@@ -1,1 +1,0 @@
-import{_ as t,o as d,c as e,Q as l}from"./chunks/framework.a638f038.js";const p=JSON.parse('{"title":"Flex","description":"","frontmatter":{},"headers":[],"relativePath":"css/flex.md","filePath":"css/flex.md"}'),a={name:"css/flex.md"},r=l("",20),o=[r];function i(h,n,c,s,f,b){return d(),e("div",null,o)}const u=t(a,[["render",i]]);export{p as __pageData,u as default};
