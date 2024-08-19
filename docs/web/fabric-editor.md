@@ -19,7 +19,9 @@
 
 本文对应代码使用 `vue3` 做示例，详见 [fabric-editor-demo](https://gitee.com/lafen/fabric-editor-demo)
 
-⚠️但是需要注意 `vue3` 项目中给画布添加元素，要使用 `markRaw` 将元素标记为原生对象，否则元素的缩放会失效⚠️详见[🅰️ttention❗](#🅰️ttention❗)
+⚠️但是需要注意 `vue3` 项目中给画布添加元素，要使用 `markRaw` 将元素标记为原生对象，否则元素的缩放会失效
+
+⚠️详见[🅰️ttention❗](#🅰️ttention❗)
 
 ### 初始化画布
 
