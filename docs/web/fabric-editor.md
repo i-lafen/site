@@ -1,7 +1,7 @@
-# fabric-editor
+# Fabric Editor
 
 
-`canvas api` 晦涩难用，使用 `fabric` 做一个画布编辑器
+`canvas api` 晦涩难用，使用 `fabric@5.4.0` 做一个画布编辑器
 
 基本样式如下
 
@@ -34,7 +34,7 @@ const canvasRef = ref(null)
 const bg = 'rgba(255, 255, 255, 1)'
 
 const init = () => {
-  canvasRef.value = new fabric.Canvas('c')
+  canvasRef.value = markRaw(new fabric.Canvas('c'))
   canvasRef.value.backgroundColor = bg
 }
 onMounted(init)
@@ -111,6 +111,14 @@ const shape = new fabric.IText('注意', {
 const shapeRaw = markRaw(shape)
 canvasRef.value.add(shapeRaw)
 canvasRef.value.setActiveObject(shapeRaw)
+```
+
+⚠️ 注意：此外画布实例也得标记为原生对象，否则在使用 `loadFromJSON` 加载画布 `json` 来回显时会出现同样的缩放失效问题
+
+```js
+// 画布实例标记为原生对象
+const canvasRef = ref(null)
+canvasRef.value = markRaw(new fabric.Canvas('c'))
 ```
 
 
@@ -217,6 +225,12 @@ const setDataJson = (data) => {
 
 ## Finally
 
+实际上 `fabric` 更加推荐将画布实例赋值为原生对象而非响应式对象，只不过这里一开始这样定义成了响应式对象，要改动的地方太多，所以直接将其标记为原生对象算了，这样在 `hooks` 中传参也不至于丢失了画布实例的引用，在此记录一下这个坑🕳️
+
+
+## Reference
+
 - [fabric-editor-demo](https://gitee.com/lafen/fabric-editor-demo)
 - [fabricjs 官网](http://fabricjs.com/)
 - [fabricjs 官网 demo](http://fabricjs.com/demos/)
+- [github issues](https://github.com/fabricjs/fabric.js/issues/8810)

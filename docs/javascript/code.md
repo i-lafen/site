@@ -1,78 +1,46 @@
 # JS 代码
 
 
-## 实现 compose 函数，类似 koa 中间件洋葱模型
+## 根据以下代码实现 TaskPro ，类似洋葱模型
 
 ```js
-const middleware = []
-middleware.push((next) => {
-  console.log(1)
-  next()
-  console.log(1.1)
+// 实现 TaskPro 类
+class TaskPro {}
+
+// 使用
+const t = new TaskPro()
+
+t.addTask(async (next) => {
+  console.log('1-start')
+  await next()
+  console.log('1-end')
 })
-middleware.push((next) => {
-  console.log(2)
+t.addTask((next) => {
+  console.log('2')
   next()
-  console.log(2.1)
 })
-middleware.push((next) => {
-  console.log(3)
+t.addTask((next) => {
+  console.log('3')
   next()
-  console.log(3.1)
 })
 
-const fn = compose(middleware)
-fn() // 1 - 2 - 3 - 3.1 - 2.1 - 1.1
+t.run() // 1-start , 2 , 3 , 1-end
 ```
 
-`compose` 函数实现
+`TaskPro` 类实现
 
 ```js
-// 不是 promise 实现
-const compose = (middleware) => {
-  return () => {
-    const dispatch = (i) => {
-      if (i === middleware.length) {
-        return
-      }
-      const fn = middleware[i]
-      const next = () => {
-        // 在 next() 的时候，调用数组中的下一个中间件函数
-        dispatch(i + 1)
-      }
-      fn(next)
-    }
-    dispatch(0)
+class TaskPro {
+  #taskList = []
+  addTask(task) {
+    this.#taskList.push(task)
   }
-}
-
-// koa2 框架的中间件实现原理
-function compose (middleware) {
-  // 提前判断中间件类型,防止后续错误
-  if (!Array.isArray(middleware)) throw new TypeError('Middleware stack must be an array!')
-  for (const fn of middleware) {
-    // 中间件必须为函数类型
-    if (typeof fn !== 'function') throw new TypeError('Middleware must be composed of functions!')
-  }
-  return function (context, next) {
-    // 采用闭包将索引缓存,来实现调用计数
-    let index = -1
-    return dispatch(0)
-    function dispatch (i) {
-      // 防止next()方法重复调用
-      if (i <= index) return Promise.reject(new Error('next() called multiple times'))
-      index = i
-      let fn = middleware[i]
-      if (i === middleware.length) fn = next
-      if (!fn) return Promise.resolve()
-      try {
-        // 包装next()返回值为Promise对象
-        return Promise.resolve(fn(context, dispatch.bind(null, i + 1)));
-      } catch (err) {
-        // 异常处理
-        return Promise.reject(err)
-      }
-    }
+  run() {
+    const task = this.#taskList.shift()
+    return task(() => {
+      if (this.#taskList.length === 0) return
+      return this.run()
+    })
   }
 }
 ```
@@ -116,8 +84,8 @@ const vnode = {
 
 关键 `api` 
 
-- `document.createElement(tagName)` 新建 dom
-- `ele.setAttribute(attr, value)` 设置 attr 属性
+- `document.createElement(tagName)` 新建 `dom`
+- `ele.setAttribute(attr, value)` 设置 `attr` 属性
 - `parent.appendChild(ele)` 子元素放置
 
 
@@ -416,11 +384,13 @@ const quickSort = (arr) => {
 洗牌算法，产生的结果必须有 `n!` 种可能，否则无法做到真的打乱了。
 
 ```js
+// 遍历数组，将每个元素与后面的随机元素交换
 const nums = [1, 2, 3, 4, 5]
 const shuffle = (arr) => {
   const n = arr.length
   for (let i = 0; i < n; i++) {
     const r = Math.floor(i + Math.random() * (n - i))
+    // 交换
     const t = arr[i]
     arr[i] = arr[r]
     arr[r] = t
