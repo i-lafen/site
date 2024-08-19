@@ -16,7 +16,7 @@
     "auto": "npm run build && npm run push"
   },
   "keywords": [],
-  "author": "",
+  "author": "LAFEN",
   "license": "ISC",
   "devDependencies": {
     "vitepress": "1.0.0-rc.7"
