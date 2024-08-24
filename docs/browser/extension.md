@@ -119,7 +119,7 @@
     }
   ],
   // 插件主页，这个很重要，不要浪费了这个免费广告位
-  "homepage_url": "https://lafen.gitee.io",
+  "homepage_url": "https://i-lafen.github.io/site",
   // 覆盖浏览器默认页面
   "chrome_url_overrides": {
     // 覆盖浏览器默认的新标签页

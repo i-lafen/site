@@ -28,4 +28,4 @@
 
 
 
-分层与合成详见[分层与合成](https://lafen.gitee.io/site/browser/layer)
+分层与合成详见[分层与合成](https://i-lafen.github.io/site/browser/layer)

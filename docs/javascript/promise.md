@@ -1,4 +1,7 @@
-# Promise 手写简单版
+# Promise 模拟简单版
+
+
+模拟 `Promise` 的简单实现，无链式调用
 
 
 ```js

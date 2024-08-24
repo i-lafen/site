@@ -2,11 +2,11 @@
 
 主流微前端方案主要包含以下
 
-- **webpack5 module federation** 模块联邦 
-- **micro app** 支持 vite，1.x 版本提供虚拟路由
-- **wujie 无界** 对原项目侵入最小，支持降级方案
-- **qiankun 乾坤**
-- **single-spa**
+- `webpack5 module federation` 模块联邦 
+- `micro app` 支持 `vite`，`1.x` 版本提供虚拟路由
+- `wujie` 对原项目侵入最小，支持降级方案
+- `qiankun` 社区最活跃，改造成本略高于 `micro app`
+- `single-spa` 改造成本最大
 
 
 :::tip
