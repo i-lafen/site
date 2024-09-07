@@ -125,6 +125,19 @@
 
 
 
+## vite 开发打包快的原因总结
+
+至此可以做下简单总结了， `vite` 的打包速度快主要得益于以下几点
+
+- 支持 `tree-shaking` ， 开发时按需打包
+- 源码 `no-bundle` ， 给 `dev server` 做一次编译，减少开发编译开销
+- `node_modules` 依赖包预构建，转换 `es module` ，合并小文件
+- 合理利用缓存，源码做协商缓存，依赖包做强缓存
+- `esbuild` 承担开发环境的 依赖预构建，正式环境的 `ts` 转译 和 压缩 工作
+- `esbuild` 底层 `go` 语言实现与多线程运行，比 `node` 环境运行的 `webpack` 快得多
+
+
+
 ## Sources
 
 [深入浅出Vite](https://juejin.cn/book/7050063811973218341)
