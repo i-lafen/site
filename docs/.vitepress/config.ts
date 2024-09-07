@@ -15,7 +15,7 @@ const nav = [
       { link: '/leetcode/pointer', text: 'Pointer' },
       { link: '/leetcode/number', text: 'Number' },
       { link: '/leetcode/dp', text: 'DP' },
-      { link: '/leetcode/lru', text: 'LRU' }
+      { link: '/leetcode/lru', text: 'LRU' },
     ]
   },
   {
@@ -30,7 +30,7 @@ const nav = [
       { link: '/http/csp', text: 'CSP' },
       { link: '/http/hand', text: 'Hand' },
       { link: '/http/url-to-page', text: 'Url-to-page' },
-      { link: '/http/dns', text: 'DNS' }
+      { link: '/http/dns', text: 'DNS' },
     ]
   },
   {
@@ -50,7 +50,8 @@ const nav = [
       { link: '/engineering/webpack', text: 'Webpack' },
       { link: '/engineering/gulp', text: 'Gulp' },
       { link: '/engineering/cli', text: 'Cli' },
-      { link: '/engineering/vue', text: 'Vue' }
+      { link: '/engineering/vue', text: 'Vue' },
+      { link: '/engineering/react', text: 'React' },
     ]
   },
   {
@@ -62,7 +63,7 @@ const nav = [
       { link: '/microfe/microapp', text: 'Micro App' },
       { link: '/microfe/wujie', text: 'WuJie' },
       { link: '/microfe/qiankun', text: 'Qiankun' },
-      { link: '/microfe/compare', text: 'Compare' }
+      { link: '/microfe/compare', text: 'Compare' },
     ]
   },
   {
@@ -75,7 +76,7 @@ const nav = [
       { link: '/browser/node-eventloop', text: 'Node Eventloop' },
       { link: '/browser/asyncapi', text: 'Async Api' },
       { link: '/browser/layer', text: 'Layer' },
-      { link: '/browser/extension', text: 'Extension' }
+      { link: '/browser/extension', text: 'Extension' },
     ]
   },
   {
@@ -104,7 +105,7 @@ const nav = [
       { link: '/javascript/all', text: 'Promise.all' },
       { link: '/javascript/promise', text: 'Promise' },
       { link: '/javascript/promisify', text: 'Promisify' },
-      { link: '/javascript/max-request', text: 'Max Request' }
+      { link: '/javascript/max-request', text: 'Max Request' },
     ]
   },
   {
@@ -120,7 +121,7 @@ const nav = [
       { link: '/css/margin', text: 'Margin' },
       { link: '/css/inline-block', text: 'Inline Block' },
       { link: '/css/bfc', text: 'BFC' },
-      { link: '/css/center', text: 'Center' }
+      { link: '/css/center', text: 'Center' },
     ]
   },
   {
@@ -134,7 +135,7 @@ const nav = [
       { link: '/web/fabric-editor', text: 'Fabric Editor' },
       { link: '/web/threejs', text: 'ThreeJs' },
       { link: '/web/vitepress', text: 'VitePress' },
-      { link: '/web/interview', text: 'Interview' }
+      { link: '/web/interview', text: 'Interview' },
     ]
   }
 ] as NavItem[]
