@@ -94,9 +94,9 @@ cavasRef.value.setActiveObject(shapeRaw)
 `vue3` 项目中，响应式对象会将 `add` 的元素转成 `Proxy` ，会导致元素控件无法响应，即无法缩放和删除等操作，所以需要使用 `vue3` 提供的 `markRaw` 将元素标记 `add` 的元素为原生对象，代码如下
 
 ```js
-// 画布实例为响应式对象 🕳️
+// 注意画布实例 🕳️
 const canvasRef = ref(null)
-canvasRef.value = new fabric.Canvas('c')
+canvasRef.value = markRaw(new fabric.Canvas('c'))
 
 // 创建一个文本元素
 const shape = new fabric.IText('注意', {
@@ -126,7 +126,7 @@ canvasRef.value = markRaw(new fabric.Canvas('c'))
 
 ### 编辑元素属性
 
-选中元素时，可以对元素属性进行编辑，例如 填充色、边框色、边框宽。
+选中元素时，可以对元素属性进行编辑，例如 填充色、边框色、边框宽
 
 首先选中元素时，先获取元素的属性回显，于是监听画布的 `mouse:down` 事件
 

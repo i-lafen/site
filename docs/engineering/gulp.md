@@ -10,9 +10,9 @@
 
 常见的自动化构建工具
 
-- grunt
-- gulp
-- webpack
+- `grunt`
+- `gulp`
+- `webpack`
 
 而这篇主要记录的是 `gulp` ，没错，因为 `gulp` 相对来说，比较简单（菜鸡狗头保命）
 
@@ -104,7 +104,7 @@ gulp hello
 
 **注意**
 
-`gulp 4.0` 版本 要求在任务内，返回一个 `promise`对象，需要对齐手动关闭，否则任务不会关闭，可通过以下方式将其关闭
+`gulp 4.0` 版本 要求在任务内，返回一个 `promise` 对象，需要对其手动关闭，否则任务不会关闭，可通过以下方式将其关闭
 
 ```js
 const gulp = require("gulp");
@@ -436,7 +436,7 @@ gulp js
 
 在根目录下新建文件 `.babelrc` 对齐进行配置
 
-```js
+```json
 {
   "presets": [
     ["@babel/preset-env", {

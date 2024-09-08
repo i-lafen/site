@@ -50,25 +50,25 @@ const MyComponent = () => {
 
 - 父传子
   ```jsx
-  <!-- 子组件中 props 就是函数组件的参数 -->
+  // 子组件中 props 就是函数组件的参数
   const MyComponent = (props) => {
     return <button>count: {props.count}</button>
   }
 
-  <!-- 父组件 -->
+  // 父组件
   const MyApp = () => {
     return <MyComponent count={1} />
   }
   ```
 - 子传父
   ```jsx
-  <!-- 子组件 接收 props 来子组件数据传出去 -->
+  // 子组件 接收 props 来子组件数据传出去
   const MyComponent = ({ onUpdateTxt }) => {
     const msg = 'hello'
     return <button onClick={onUpdateTxt(msg)}>子传父</button>
   }
 
-  <!-- 父组件 通过 props 传入更新函数 onUpdateTxt -->
+  // 父组件 通过 props 传入更新函数 onUpdateTxt
   const MyApp = () => {
     const [txt, setTxt] = useState('')
     return (

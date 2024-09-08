@@ -369,6 +369,50 @@ console.log(generator.next().done);  // 输出: true，表示迭代器已完成
 
 
 
+## ES6 中的 Proxy 和 Reflect 的理解
+
+两个是非常强大的内置对象，通常一起使用来提供更方便的对象操作和控制
+
+### Proxy
+
+`Proxy` 是一个构造函数，用于创建一个对象的**代理**，从而可以对对象进行自定义操作，例如属性查找、赋值、枚举等
+
+```js
+const target = {}
+const handler = {
+  get(target, prop, receiver) {
+    console.log('get: ', prop)
+    return Reflect.get(target, prop, receiver)
+  },
+  set(target, prop, value, receiver) {
+    console.log('set: ', prop, '=', value)
+    return Reflect.set(target, prop, value, receiver)
+  }
+}
+
+const proxy = new Proxy(target, handler)
+proxy.foo = 123 // set: foo=123
+console.log(proxy.foo) // get: foo 然后再输出 123
+```
+
+以上例子即 `Proxy` 拦截 `target` 的 `get` 和 `set` 操作
+
+
+### Reflect
+
+`Reflect` 是一个内置的静态对象，它提供拦截 `js` 操作的方法。这些方法与 `Proxy` 的 `handler` 方法一一对应
+
+`Reflect` 主要目的是提供一个标准化的方法拦截 `js` 操作，以便开发者进行对象的**元编程**操作
+
+```js
+const obj = { foo: 123 }
+console.log(Reflect.get(obj, 'foo')) // 123
+Reflect.set(obj, 'foo', 456)
+console.log(obj.foo) // 456
+```
+
+
+
 ## 浏览器跨标签页通信方式
 
 ### 需求
