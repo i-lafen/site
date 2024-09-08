@@ -11,6 +11,9 @@
 - `useEffect`
 - `useMemo`
 - `useCallback`
+- `useRef`
+- `forwardRef`
+- `useImpreativeHandle`
 
 
 ## React 概念理解
@@ -19,7 +22,7 @@
 `React` 是一个用于构建用户界面的 `JavaScript` 库，当 `state` 或 `props` 发生变化时， `React` 会重新更新界面
 
 
-### 组件状态
+### useState 组件状态
 
 如果想要改变组件状态，需要使用 `useState` 来定义状态变量和修改状态的函数
 
@@ -83,26 +86,8 @@ const MyComponent = () => {
 
 
 
-### 获取 dom
 
-使用 `ref` 定义，使用 `useRef` 获取 `dom` 元素
-
-```jsx
-const MyComponent = () => {
-  const ref = useRef(null)
-  const handleClick = () => {
-    // dom 从 ref.current 中获取
-    console.log(ref.current)
-  }
-  return (
-    <input ref={ref} value='hello' />
-    <button onClick={handleClick}>获取dom</button>
-  )
-}
-```
-
-
-### 列表渲染
+### map 列表渲染
 
 列表中渲染，需要使用 `key` 来标识
 
@@ -144,7 +129,7 @@ const MyComponent = () => {
 ```
 
 
-### 表单输入
+### 表单输入绑定
 
 `React` 中没有双向数据绑定，需要自己手动处理
 
@@ -165,7 +150,7 @@ const MyComponent = () => {
 ```
 
 
-### useMemo
+### useMemo 缓存计算结果
 
 ```js
 const cachedValue = useMemo(calculateValue, dependencies)
@@ -247,7 +232,7 @@ const MyApp = ({ id }) => {
 ```
 
 
-### useCallback
+### useCallback 缓存函数
 
 `useCallback` 是 `useMemo` 的特殊版本，用于缓存函数，而不是缓存值
 
@@ -260,10 +245,10 @@ const MyApp = ({ id }) => {
 }
 ```
 
-`useCallback` 的作用和上面的 `useMemo` 缓存函数的作用一致，少一层函数嵌套
+`useCallback` 的作用和上面的 `useMemo` 缓存函数的作用一致，就是少一层函数嵌套
 
 
-### useEffect
+### useEffect 副作用函数
 
 `useEffect` 是 `React` 提供的用于处理副作用的函数，可以传入依赖项来表示监听依赖变化，则执行副作用函数，类似于 `vue` 的 `watch`
 
@@ -290,7 +275,7 @@ useEffect(() => {
 })
 ```
 
-`useEffect` 返回一个函数，用于清理副作用，类似 `vue` 的 `beforeDestroy` 生命周期。它的执行时机是在组件销毁前，或者副作用函数执行前
+`useEffect` 返回一个函数，用于清理副作用，类似 `vue` 的 `beforeDestroy` 生命周期。它的执行时机是在组件销毁前，或者副作用函数执行前，可以在此清理一些定时器、解绑事件等
 
 
 
@@ -392,9 +377,9 @@ const Page = () => {
 ```
 
 - 上面例子中 `count` 变化会导致 `Page` 会重新渲染
-- 而 `SubPage` 作为子组件，也会重新渲染
+- 而 `SubPage` 作为子组件，也会重新渲染，即使子组件并没有 `props`
 
-但我们知道，子组件中什么都没有变，我们并不想要子组件重新渲染，而是想将其缓存起来
+但我们知道，子组件中什么都没有变，我们并不想要子组件重新渲染，而是想将其缓存起来，跳过无用的重新渲染
 
 此时 `useMemo` 就可以缓存。而相对于组件来说， `React.memo` 更适合做缓存组件，这样 `React` 在重新渲染子组件之前会检查一下 `props` 是否改变了
 
@@ -501,15 +486,122 @@ const Page = () => {
 大部分情况下，这都将得不偿失，因为要改动的太多，使用混乱
 
 
-#### useMemo 和 useCallback 正确用处
+#### useMemo 和 useCallback 正确用法
 
 就像 `React` 官网文档说的
 
 - `useMemo` 最主要的作用，就是在每次的渲染时能够缓存计算的结果
 - `useCallback` 则是允许你在多次渲染中缓存函数
 
+```jsx
+const MyComponent = ({ count }) => {
+  const cachedCount = useMemo(() => longTimeCalc(count), [count])
+  // ...
+}
+```
 
-只有在耗时计算的时候，才需要推荐使用 `useMemo`
+
+只有在耗时计算的时候，才需要推荐使用 `useMemo` ， 其余的都不要提前优化！
+
+
+
+### useRef 获取 dom
+
+使用 `ref` 定义，使用 `useRef` 获取 `dom` 元素
+
+```jsx
+const MyComponent = () => {
+  const domRef = useRef(null)
+  const handleClick = () => {
+    // dom 从 domRef.current 中获取
+    domRef.current?.focus()
+  }
+  return (
+    <input ref={domRef} value='hello' />
+    <button onClick={handleClick}>获取dom聚焦</button>
+  )
+}
+```
+
+`ref` 的主要作用就是定义 `dom` 元素，但是 `ref` 最大的问题就是，它不能作用在函数组件上，在父组件需要获取子组件的 `dom` 的场景下，就需要 `forwardRef`
+
+
+### forwardRef 获取子组件的 dom
+
+使用 `forwardRef` 改造下
+
+```jsx
+// 函数子组件
+const InputWrap = (_props, ref) => {
+  return <input ref={ref} value='hello' />
+}
+// 子组件使用 forwardRef 包裹后，就能直接使用 ref 了
+const InputWrapForwardRef = forwardRef(InputWrap)
+
+// 父组件
+const App = () => {
+  const domRef = useRef()
+  const handleClick = () => {
+    domRef.current?.focus()
+  }
+  return (
+    <>
+      <InputWrapForwardRef ref={domRef} />
+      <button onClick={handleClick}>focus</button>
+    </>
+  )
+}
+```
+
+- `ref` 是不能作为函数组件的 `props` 的，所以需使用 `forwardRef` 包裹一下函数组件
+- `forwardRef` 包裹的子组件第二个参数是 `ref` ，就可以绑定到子组件的 `dom` 上
+
+
+以上 `forwardRef` 显然不是一个优雅的解决办法， `useImpreativeHandle` 指令式 `API` 更合适
+
+
+### useImperativeHandle 转发组件的 ref
+
+子组件使用 `useImperativeHandle` 做下改造，此时子组件传入 `ref` 就按 `props` 处理
+
+```jsx
+// 函数子组件 - props 传入
+const InputWrap = ({ domRef }) => {
+  const inputRef = useRef()
+  // 将父组件的 domRef.current 绑定到子组件的 inputRef.current
+  useImperativeHandle(domRef, () => inputRef.current, [])
+  return <input ref={inputRef} value='hello' />
+}
+
+// 父组件 - 改成 props 传入 domRef
+const App = () => {
+  const domRef = useRef()
+  const handleClick = () => {
+    domRef.current?.focus()
+  }
+  return (
+    <>
+      <InputWrap domRef={domRef} />
+      <button onClick={handleClick}>focus</button>
+    </>
+  )
+}
+```
+
+- 子组件改成了 `props` 传入 `domRef` ，并在子组件内部声明 `dom` 的 `inputRef`
+- 子组件内使用 `useImpressiveHandle` 将传入的 `domRef` 与 `inputRef` 进行绑定，当然也可以仅绑定 `inputRef.current.focus` 方法，在返回的对象中定义 `focus` 方法即可
+
+
+以上就是 `React` 中获取 `dom` 的方法，处理下来真的是不好理解
+
+
+## Finally
+
+`React` 的 `hooks` 真是不好理解，光是 `useMemo` 、 `useCallback` 、 `useEffect` 、 `useImpreativeHandle` 都得很清楚他们的使用场景、优化思路才好正确使用
+
+
+还得是那句，不要做提前优化
+
 
 
 ## References
@@ -517,4 +609,5 @@ const Page = () => {
 - [React useMemo](https://react.docschina.org/reference/react/useMemo)
 - [React useCallback](https://react.docschina.org/reference/react/useCallback)
 - [Post](https://juejin.cn/post/7251802404877893689)
+- [Post](https://juejin.cn/post/7291186330911326266)
 
