@@ -150,7 +150,9 @@ isBatchingUpdates = false // 结束标志
 当然以上代码是基于 `React@17` 的，弯弯绕绕的很
 
 
-而 `React@18` 当中引入了自动批处理功能，就是异步更新了（ `Auto Batch` ），所有的 `setState` 都是异步批量执行了
+而 `React@18` 当中引入了自动批处理功能，就是异步更新了（ `Auto Batch` ），所有的 `setState` 都是异步批量执行了，就不存在之前的问题了
+
+当然其异步并非借助 `js` 当中的 异步 `api` ， 而是 `react@18` 中自己设计的异步调度
 
 
 
