@@ -12,8 +12,7 @@
     "dev": "npm run docs:dev",
     "build": "npm run docs:build",
     "preview": "npm run docs:preview",
-    "push": "git add . && git commit -m 'build' && git push",
-    "auto": "npm run build && npm run push"
+    "push": "git add . && git commit -m 'build' && git push"
   },
   "keywords": [],
   "author": "LAFEN",
