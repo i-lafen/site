@@ -1,9 +1,9 @@
 # 前端模块化方案
 
-随着前端应用的功能模块越来越多，工程文件越来越多， `js` 文件之间的引用关系越来越复杂，变量冲突也越发容易，亟需模块化方案，于是有了 `IIFE`、`AMD`、`CMD`、`CommonJs`、`ES6Module` 等模块化方案。
+随着前端应用的功能模块越来越多，工程文件越来越多， `js` 文件之间的引用关系越来越复杂，变量冲突也越发容易，亟需模块化方案，于是有了 `IIFE`、`AMD`、`CMD`、`CommonJs`、`ES Module` 等模块化方案。
 
 - `CommonJS` 特点是 同步加载，适合服务端实时操作环境，作为 `nodejs` 的模块化方案在服务端使用
-- `AMD`、`CMD`、`ES6Module` 特点是异步加载，适合浏览器异步加载服务器资源文件的需求， `ES6Module` 是浏览器规范
+- `AMD`、`CMD`、`ES Module` 特点是异步加载，适合浏览器异步加载服务器资源文件的需求， `ES Module` 是浏览器规范
 
 ## 闭包 + 对象
 
@@ -135,8 +135,8 @@ sum()
 
 ## CommonJs 和 ES6Module 差异
 
-- `CommonJs` 输出的是一个值的拷贝， `ES6 Module` 是值的引用
-- `CommonJs` 是动态加载， `ES6 Module` 是静态加载，编译时就确定了依赖关系，所以 `ES6 Module` 能够支持 `tree shaking`
+- `CommonJs` 输出的是一个值的拷贝， `ES Module` 是值的引用
+- `CommonJs` 是动态加载， `ES Module` 是静态加载，编译时就确定了依赖关系，所以 `ES Module` 能够支持 `tree shaking`
 
 
 ## umd

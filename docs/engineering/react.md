@@ -43,6 +43,116 @@ const MyComponent = () => {
 }
 ```
 
+#### useState 是异步还是同步
+
+需要注意的是， `setCount` 之后，立即获取 `count` 的值，会发现 `count` 的值还是之前的并没有立即改变，因为获取的仍是当前组件的一份快照，无论连续设置多少次仍是原来的值
+
+```jsx
+// 多次设置 获取的 count 仍是当前快照
+const handleClick = () => {
+  setCount(count + 1) // 0 + 1
+  setCount(count + 1) // 0 + 1
+  setCount(count + 1) // 0 + 1
+  console.log(count) // 0
+}
+```
+
+如果想要获取最新值，可以传入函数来获取最新值，表示根据前一个值来计算
+
+```jsx
+// 传入函数，可拿到最新值 表示根据前一个值来计算
+const handleClick = () => {
+  setCount(prevCount => prevCount + 1)
+  console.log(count) // 1
+  setCount(prevCount => prevCount + 1)
+  console.log(count) // 2
+}
+```
+
+或者传入第二个参数作为回调函数获取，但一般不用
+
+```jsx
+// 可拿到最新值
+const handleClick = () => {
+  setCount(count + 1, () => console.log(count)) // 1
+}
+```
+
+此时你可以认为说 `setState` 是异步，但是这样的说法并不完全正确，因为 `setState` 在 `setTimeout` 、 `dom` 事件、 `React` 声明周期当中却是同步的
+
+```jsx
+// setTimeout
+const handleClick = () => {
+  setTimeout(() => {
+    setCount(count + 1)
+    console.log(count) // 1
+  }, 0)
+}
+
+// dom 事件
+document.body.addEventListener('click', () => {
+  setCount(count + 1)
+  console.log(count) // 1
+})
+
+// React 生命周期 - 类组件， React 需要根据最新的 state 来更新组件
+shoulComponetUpdate(nextProps, nextState) {
+  console.log(nextProps.count) // 1
+  return true // 默认返回true
+}
+
+// 函数组件的生命周期则用 useEffect 来代替
+useEffect(() => {
+  console.log(count) // 1
+})
+```
+
+这是因为 `React` 的 `setState` 当中存在 `batchUpdate` 机制，要看获取值时候是否在这个机制当中，即 `transaction` 事务机制
+
+```js
+transaction.initialize = () => {
+  isBatchingUpdate = true
+  console.log('initialize')
+}
+transaction.close = () => {
+  isBatchingUpdates = false
+  console.log('close')
+}
+
+const setStateFunc = () => {
+  console.log('count')
+}
+
+transaction.perform(setStateFunc)
+// initialize
+// count
+// close
+```
+
+即 `React` 在 `setState` 之前，会设置 `isBatchingUpdates = true` ， 在 `setState` 之后再置为 `false`
+
+而 `setTimeout` 注册回调 和 `dom` 事件注册回调都是异步任务，所以 `isBatchingUpdates` 已经置为了 `false` ，类似以下伪代码
+
+```js
+// 伪代码
+isBatchingUpdates = true // 标志当前处于批量更新状态
+
+setTimeout(() => {
+  // 异步，标志早已重置
+  setCount(count + 1)
+  console.log(count) // 1
+}, 0)
+
+isBatchingUpdates = false // 结束标志
+```
+
+所以说 `setState` 无所谓异步还是同步，要看用在什么地方
+
+直接将更改后的值传入 `setState` ，则不能同步获取到最新值
+
+但如果传入函数回调、 在 `setTimeout` 或 `dom` 事件回调中更改都可以看成是能够同步获取最新值
+
+
 
 ### 组件传值
 
@@ -250,7 +360,7 @@ const MyApp = ({ id }) => {
 
 ### useEffect 副作用函数
 
-`useEffect` 是 `React` 提供的用于处理副作用的函数，可以传入依赖项来表示监听依赖变化，则执行副作用函数，类似于 `vue` 的 `watch`
+`useEffect` 是 `React` 提供的用于处理副作用的函数，可以传入依赖项来表示依赖变化，则执行副作用函数，类似于 `vue` 的 `watch`
 
 ```jsx
 const MyComponent = ({ id }) => {
@@ -260,7 +370,9 @@ const MyComponent = ({ id }) => {
 }
 ```
 
-如果不传入依赖项，则组件初次渲染、每次重新渲染都会执行副作用函数，它模拟了 `React` 原来的 `componentDidMount` 和 `componentDidUpdate` 两个生命周期
+如果不传入依赖项，则组件**初次挂载**、**重新渲染**后都会执行副作用函数，它模拟了 `React` 原来的 `componentDidMount` 和 `componentDidUpdate` 两个生命周期
+
+如果传入 `[]` 空数组，则在组件**挂载**后执行副作用函数，它模拟了 `React` 原来的 `componentDidMount` 生命周期
 
 但是 `useEffect` 的执行是异步的，且在组件 `dom` 渲染完毕之后才执行，这样可以避免组件 `dom` 渲染完毕之前执行副作用函数，导致 `dom` 渲染异常
 
@@ -507,6 +619,8 @@ const MyComponent = ({ count }) => {
 
 ### useRef 获取 dom
 
+`useRef` 用于声明不用参与组件渲染的变量，当然可以用来存放 `dom`
+
 使用 `ref` 定义，使用 `useRef` 获取 `dom` 元素
 
 ```jsx
@@ -593,6 +707,16 @@ const App = () => {
 
 
 以上就是 `React` 中获取 `dom` 的方法，处理下来真的是不好理解
+
+
+当然 `useRef` 的本意是声明不需要参与组件渲染的变量的，例如
+
+```jsx
+const App = () => {
+  const timerRef = useRef(null)
+  timerRef.current = setTimeout(() => console.log('useRef'), 1000)
+}
+```
 
 
 ## Finally
