@@ -14,6 +14,7 @@
 - `useRef`
 - `forwardRef`
 - `useImpreativeHandle`
+- `useReducer`
 
 
 ## React 概念理解
@@ -45,10 +46,14 @@ const MyComponent = () => {
 
 #### useState 是异步还是同步
 
-需要注意的是， `setCount` 之后，立即获取 `count` 的值，会发现 `count` 的值还是之前的并没有立即改变，因为获取的仍是当前组件的一份快照，无论连续设置多少次仍是原来的值
+`React@17` 和 `React@18` 当中略有些差别， `React@18` 中引入了批量异步处理
+
+而 `React@17` 当中就比较混乱， 以下以 `React@17` 为例
+
+需要注意的是， `setCount` 之后，立即获取 `count` 的值，会发现 `count` 的值还是之前的并没有立即改变，因为获取的仍是当前组件的一份快照，无论连续设置多少次仍是原来的值，并且会合并更新
 
 ```jsx
-// 多次设置 获取的 count 仍是当前快照
+// 多次设置 获取的 count 仍是当前快照，并且最后会合并更新，即只更新一次
 const handleClick = () => {
   setCount(count + 1) // 0 + 1
   setCount(count + 1) // 0 + 1
@@ -69,14 +74,6 @@ const handleClick = () => {
 }
 ```
 
-或者传入第二个参数作为回调函数获取，但一般不用
-
-```jsx
-// 可拿到最新值
-const handleClick = () => {
-  setCount(count + 1, () => console.log(count)) // 1
-}
-```
 
 此时你可以认为说 `setState` 是异步，但是这样的说法并不完全正确，因为 `setState` 在 `setTimeout` 、 `dom` 事件、 `React` 声明周期当中却是同步的
 
@@ -107,7 +104,7 @@ useEffect(() => {
 })
 ```
 
-这是因为 `React` 的 `setState` 当中存在 `batchUpdate` 机制，要看获取值时候是否在这个机制当中，即 `transaction` 事务机制
+这是因为 `React@17` 的 `setState` 当中存在 `batchUpdate` 机制，要看获取值时候是否在这个机制当中，即 `transaction` 事务机制
 
 ```js
 transaction.initialize = () => {
@@ -129,7 +126,7 @@ transaction.perform(setStateFunc)
 // close
 ```
 
-即 `React` 在 `setState` 之前，会设置 `isBatchingUpdates = true` ， 在 `setState` 之后再置为 `false`
+即 `React@17` 在 `setState` 之前，会设置 `isBatchingUpdates = true` ， 在 `setState` 之后再置为 `false`
 
 而 `setTimeout` 注册回调 和 `dom` 事件注册回调都是异步任务，所以 `isBatchingUpdates` 已经置为了 `false` ，类似以下伪代码
 
@@ -146,11 +143,14 @@ setTimeout(() => {
 isBatchingUpdates = false // 结束标志
 ```
 
-所以说 `setState` 无所谓异步还是同步，要看用在什么地方
+所以说 `setState` **本质上是同步** 代码，但是 `React@17` 中刻意将其设计成 "异步" 的样子，即延迟到同一任务队列的最后执行，所以造成了我们通常将其理解成 "异步"
 
-直接将更改后的值传入 `setState` ，则不能同步获取到最新值
+在传入函数回调、 在 `setTimeout` 或 `dom` 事件回调中更改都可以看成是能够同步获取最新值
 
-但如果传入函数回调、 在 `setTimeout` 或 `dom` 事件回调中更改都可以看成是能够同步获取最新值
+当然以上代码是基于 `React@17` 的，弯弯绕绕的很
+
+
+而 `React@18` 当中引入了自动批处理功能，就是异步更新了（ `Auto Batch` ），所有的 `setState` 都是异步批量执行了
 
 
 
@@ -390,6 +390,11 @@ useEffect(() => {
 `useEffect` 返回一个函数，用于清理副作用，类似 `vue` 的 `beforeDestroy` 生命周期。它的执行时机是在组件销毁前，或者副作用函数执行前，可以在此清理一些定时器、解绑事件等
 
 
+除此之外， `useEffect` 还需要注意
+
+- `useEffect` 内部不能修改 `state` ， 否则会出现死循环
+- `useEffect` 的依赖项如果是 **复杂对象**，则可能会出现死循环，此时需要使用 `useMemo` 缓存此对象
+
 
 ### 正确使用 useMemo 和 useCallback
 
@@ -420,7 +425,7 @@ const MyComponent = () => {
 }
 ```
 
-- 上面组件中 `a` 是 `useEffect` 的依赖项，在组件每次渲染时候，都会把 `a` 与上一次的值进行比较
+- 上面组件中 `a` 是 `useEffect` 的依赖项，在组件每次渲染时候，都会把 `a` 与上一次的值进行比较，即用 `Object.is` 判断
 - 由于 `a` 是一个组件中声明的复杂对象，每次重新渲染时， `a` 都会被重新创建，因此 `a` 每次都不相等，导致 `useEffect` 每次都会执行
 
 
@@ -616,6 +621,8 @@ const MyComponent = ({ count }) => {
 只有在耗时计算的时候，才需要推荐使用 `useMemo` ， 其余的都不要提前优化！
 
 
+最后，还需要注意的是，以上说的子组件重新渲染，实际还需要经过 `diff` 过程判断是否需要渲染到页面上
+
 
 ### useRef 获取 dom
 
@@ -717,6 +724,91 @@ const App = () => {
   timerRef.current = setTimeout(() => console.log('useRef'), 1000)
 }
 ```
+
+
+### useReducer 单组件状态管理
+
+- `useReducer` 是 `useState` 的代替方案，用于 `state` 复杂变化
+- `useReducer` 是单个组件状态管理，组件通讯还需要 `props`
+- `redux` 是全局的状态管理，多组件共享数据
+
+```jsx
+// 定义初始值以及操作
+const initialState = { count: 0 }
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 }
+    case 'decrement':
+      return { count: state.count - 1 }
+    default:
+      return state
+  }
+}
+
+const App = () => {
+  // 组件中使用
+  const [state, dispatch] = useReducer(reducer, initialState)
+  return <div>
+    <span>{state.count}</span>
+    <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+    <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+  </div>
+}
+```
+
+
+### Hooks 使用规则
+
+- `hooks` 只能在函数组件当中使用
+- `hooks` 不能在循环、条件判断或者嵌套函数中调用
+- `hooks` 严重依赖调用顺序
+
+
+### 自定义 Hook
+
+通常我们都需要自定义 `hooks` 来复用组件逻辑， `hooks` 的变量作用域明确，不会产生组件嵌套
+
+```js
+// useMousePosition.js
+import { useState, useEffect } from 'react'
+const useMousePosition = () => {
+  const [x, setX] = useState(0)
+  const [y, setY] = useState(0)
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setX(e.clientX)
+      setY(e.clientY)
+    }
+    document.addEventListener('mousemove', handleMouseMove)
+    return () => document.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  return [x, y]
+}
+export default useMousePosition
+
+
+// 任意组件中引入使用，例如 App.jsx
+import useMousePosition from './useMousePosition'
+const App = () => {
+  const [x, y] = useMousePosition()
+  return <p>鼠标位置：({x}, {y})</p>
+}
+```
+
+
+### 高阶组件
+
+- `HOC`
+  - 组件层级嵌套过多，不易渲染，不易调试
+  - `HOC` 会劫持 `props` ，必须严格规范，容易出现疏漏
+- `Render Props`
+  - 学习成本高，不易理解
+  - 只能传递纯函数，而默认情况下纯函数功能有限
+
+高阶组件主要用来复用组件逻辑，但在函数组件当中，还是推荐使用 自定义 `hooks` 来复用逻辑
+
 
 
 ## Finally
