@@ -162,26 +162,18 @@ export default defineConfig({
   cleanUrls: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-
     logo: 'logo.svg',
-
     nav,
     sidebar,
-
-    outline: {
-      level: 'deep',
-      label: ''
-    },
-
-    search: {
-      provider: 'local'
-    },
-
+    outline: { level: 'deep', label: '' },
+    search: { provider: 'local' },
     socialLinks: [{ icon: 'github', link: 'https://github.com/i-lafen' }],
-
     footer: {
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2023-present LAFEN'
     }
+  },
+  sitemap: {
+    hostname: 'https://i-lafen.github.io/site'
   }
 })
