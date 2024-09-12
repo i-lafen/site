@@ -292,3 +292,211 @@ event.emit('some', '--some emit--')
 `es6` 中的迭代器即 `[Symbol.iterator]` ，凡是实现了 **迭代器** 的对象，都可以使用 `for...of` 来进行遍历，例如 `Array` `Set` `Map` `NodeList。`
 
 其中 `Generator` 函数返回的结果，也实现了 `Iterator` 接口，即也可以使用 `for...of` 来遍历
+
+
+
+## 开发中常见的设计模式
+
+### 装饰器模式
+
+在某些场景下，我们希望对网页的网络请求进行拦截，以便获取到请求的入参出参，就会用到 **装饰器模式** ，这与 `vue2` 中对数组方法的拦截类似
+
+以下示例为，浏览器插件开发当中，拦截请求的入参出参以生成 `ts` 类型文档
+
+```js
+// 过滤目标 url
+const isTargetUrl = (url) => url.startsWith('/api/interface/') && url.includes('yapi')
+
+const httpInterceptor = () => {
+  // 先拿到原型链上的方法
+  const XHR = XMLHttpRequest.prototype
+  const send = XHR.send
+  const open = XHR.open
+  // 包装 open 方法，保存 请求 url 和 method
+  XHR.open = function(method, url) {
+    this._method = method
+    this._url = url
+    // 在包装方法中调用原始方法
+    return open.apply(this, arguments)
+  }
+  // 包装 send 方法
+  XHR.send = function() {
+    this.addEventListener('load', function() {
+      // 过滤是否是接口文档
+      if (isTargetUrl(this._url)) {
+        if (this.responseType !== 'blob' && this.responseText) {
+          const res = JSON.parse(this.responseText)
+          const data = {
+            key: 'chrome_plugin_yapi_to_ts',
+            res,
+            url: this._url,
+            method: this._method,
+          }
+          // 将数据发送出去给 background
+          window.postMessage(data, '*')
+          console.log('--【httpInterceptor】--', data)
+        }
+      }
+    })
+    // 在包装方法中调用原始方法
+    send.apply(this, arguments)
+  }
+}
+
+httpInterceptor()
+```
+
+以上即一个使用 装饰器模式 实现的 `xhr` 的拦截器，可以根据需要修改过滤目标 `url` 和组装你想要的 请求参数和数据
+
+可以复制到任意浏览器控制台中执行，当网页发起请求时，控制台便能获取到请求的入参出参
+
+
+### 策略模式
+
+**策略模式** 适合多种条件执行不同逻辑的场景，在进行页面跳转时，通常会根据不同权限或角色跳转不同路由，此时就可以使用 策略模式
+
+```js
+// 伪代码，你封装的获取 token 的 hooks
+const { token } = useToken()
+
+const pathHandler = (to, from, next) => {
+  // 未登录，去登录页
+  const hasToken = !!token
+  // 无匹配路由，直接去 404
+  const noMatchRouter = to.matchd.length === 0
+
+  // 定义策略，可以根据不同业务判断进行增加和排序
+  const validators = [
+    { rule: !hasToken, meta: { path: '/login', query: { redirect: to.path }, replace: true }},
+    { rule: hasToken, meta: { path: to.path, query: to.query, params: to.params, replace: true }},
+    { rule: noMatchRouter, meta: { path: '/redirect/404', replace: true }},
+  ]
+
+  // 命中策略，跳转路由
+  const found = validators.find(item => item.rule)
+  found && found.meta
+    ? next(found.meta)
+    : next()
+}
+
+// 在路由守卫当中判断
+router.beforeEach((to, from, next) => {
+  pathHandler(to, from, next)
+})
+```
+
+以上代码即使用 策略模式 实现路由跳转的策略，实际可能判断逻辑更复杂，例如包括 登录、权限、角色判断等 策略，这里只是做演示
+
+
+### 发布订阅模式
+
+在 某些场景下，我们希望实现一个 **发布订阅模式** 来实现通信功能，例如微前端的父子应用间互相通信的场景，以下是一个简单的实现
+
+```js
+class Event {
+  constructor() {
+    // 类型 { eventName: [callback1, callback2] }
+    this.events = {}
+  }
+  // 订阅
+  on(eventName, callback) {
+    if (!this.events[eventName]) {
+      this.events[eventName] = []
+    }
+    this.events[eventName].push(callback)
+  }
+  // 发布
+  emit(eventName, ...args) {
+    this.events[eventName]?.forEach(callback => callback(...args))
+  }
+  // 移除
+  off(eventName, callback) {
+    // 只传入事件名，则删除该事件的所有回调
+    if (!callback) {
+      Reflect.deleteProperty(this.events, eventName)
+      return
+    }
+    // 找到回调并移除
+    const index = this.events[eventName]?.findIndex(item => item === callback)
+    if (index > -1) {
+      this.events[eventName]?.splice(index, 1)
+    }
+  }
+}
+
+// 测试
+const event = new Event()
+event.on('thing', (info) => { console.log(3, info) })
+event.on('some', (info) => { console.log(2, info) })
+event.on('some', (info) => { console.log(1, info) }) // 订阅两个
+event.emit('some', '--some emit--')
+event.emit('thing', '--thing emit--') // 发布
+event.off('some') // 取消订阅
+console.log(event)
+```
+
+以上即 发布订阅模式 实现的简易通信功能
+
+
+### 单例模式
+
+**单例模式** 即确保一个类只有一个实例，并提供一个访问它的全局访问点，尝试对上面的 发布订阅模式 代码进行改造，使其变成 **单例模式**
+
+```ts
+type Callback = (...args: any[]) => void
+
+class Event {
+  // 唯一实例，私有变量
+  private static instance: Event | null = null
+  private events: Record<string, Callback[]> = {}
+  // 私有构造函数，防止外部 new 实例化 ，【注意】这里 构造函数私有化是在 ts 中才有
+  private constructor() {
+    // 构造函数体
+  }
+  // 公共静态方法，获取唯一实例
+  static getInstance(): Event {
+    if (!this.instance) {
+      Event.instance = new Event() // 类内部 new 可以，外部 new 则 ts 会报错
+    }
+    return Event.instance
+  }
+  // 其他代码一致...
+}
+
+const event1 = Event.getInstance()
+const event2 = Event.getInstance()
+console.log(event1 === event2) // true
+```
+
+这样就可以保证 `Event` 类只有一个实例，且只能通过静态方法获取该实例
+
+当然，上面代码中的构造函数私有化，是 `ts` 环境中的写法，其实 `js` 中尚未支持构造函数私有化，但是可以通过其他方法来实现
+
+```js
+class Event {
+  constructor() {
+    // 存在实例了，则直接抛错，这就只能 new 一次了
+    if (Event.instance) {
+      throw new Error('Use Event.getInstance() instead of new Event()')
+    }
+    // 构造函数内容，并将实例赋值给静态实例
+    Event.instance = this
+  }
+  // 静态实例
+  static instance = null
+  // 获取单例
+  static getInstance() {
+    if (!Event.instance) {
+      new Event() // 这里实际创建了一次实例
+    }
+    return Event.instance
+  }
+  // code...
+}
+
+const instance1 = Event.getInstance()
+const instance2 = Event.getInstance()
+console.log(instance1 === instance2) // true
+const instance3 = new Event() // Uncaught Error: Use Event.getInstance() instead of new Event()
+```
+
