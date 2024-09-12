@@ -168,6 +168,7 @@ export default defineConfig({
     outline: { level: 'deep', label: '' },
     search: { provider: 'local' },
     socialLinks: [{ icon: 'github', link: 'https://github.com/i-lafen' }],
+    externalLinkIcon: true,
     footer: {
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2023-present LAFEN'
