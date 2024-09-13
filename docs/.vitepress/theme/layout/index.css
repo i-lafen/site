@@ -21,9 +21,3 @@
 .VPSwitchAppearance .check {
   transform: none !important;
 }
-
-html {
-  /* 开启硬件加速，防止 动画卡顿 */
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
-}

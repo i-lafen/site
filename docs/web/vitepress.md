@@ -6,6 +6,8 @@
 - 使用 `vitepress` 快速构建在线文档
 - 使用 `medium-zoom` 图片放大预览
 - 使用 `github pages` 自动部署文档
+- 添加 文章字数 、 阅读文章 耗时
+- 添加 黑白主题切换动画
 
 
 ## 环境准备
@@ -196,6 +198,7 @@ jobs:
 ```
 
 推送到远程仓库即可，等待一会就可以访问你的文档了，地址如下
+
 ```http
 https://{username}.github.io/{repository}
 ```
@@ -211,3 +214,182 @@ https://{username}.github.io/{repository}
     - `run` 执行脚本
     - `uses` 这里使用了 `pnpm` 下载依赖包，此时需要在项目的 `package.json` 中添加字段 `"packageManager": "pnpm@8.6.11"`
   - `deploy` 部署
+
+
+
+### 添加文章字数和阅读耗时
+
+按正常阅读速度 `500/min` 算，先获取页面字数，然后按这个一般阅读进行估算阅读时间
+
+暂且将阅读时间放置在每篇文章顶部，可以利用 `vitepress` 提供的页面的插槽来放置，此时需要对默认布局进行修改
+
+`/.vitepress/theme/` 文件夹下放置 `layout/index.vue` ，用这个来覆盖默认主题
+
+```vue
+<!-- /.vitepress/theme/layout/index.vue -->
+<script setup>
+import DefaultTheme from 'vitepress/theme'
+import useSpendTime from '../hooks/useSpendTime'
+
+const { text, textStyle, colorStyle } = useSpendTime()
+</script>
+
+<template>
+  <DefaultTheme.Layout>
+    <template #doc-before>
+      <span :style="textStyle">
+        ⏰
+        <span :style="colorStyle">{{ text }}</span>
+      </span>
+    </template>
+  </DefaultTheme.Layout>
+</template>
+```
+
+`useSpendTime` 的 `hooks` 代码如下
+
+```ts
+// /theme/hooks/useSpendTime.ts
+import { onMounted, ref, watch, computed, nextTick } from 'vue'
+import { useRoute } from 'vitepress'
+
+/**
+ * 阅读文章花费时间
+ * @returns { text: string }
+ */
+const useSpendTime = () => {
+  const route = useRoute()
+
+  const count = ref(0)
+
+  const initStat = () => {
+    count.value = document.querySelector("#VPContent")?.innerText?.length ?? 0
+  }
+  onMounted(initStat)
+  watch(() => route.path, () => nextTick(initStat))
+
+  const spendTime = computed(() => Math.round(count.value / 500))
+  const text = computed(() => `本文共 ${count.value} 字，阅读约 ${spendTime.value} 分钟`)
+
+  const textStyle = { display: 'flex', marginBottom: '1rem' }
+  const colorStyle = { color: 'var(--vp-c-text-3)' }
+
+  return {
+    text,
+    textStyle,
+    colorStyle
+  }
+}
+
+export default useSpendTime
+```
+
+然后在 `/theme/index.ts` 中引入覆盖 `Layout` 即可
+
+```ts
+import DefaultTheme from 'vitepress/theme'
+
+import './index.css'
+import Layout from './layout/index.vue'
+
+import useImgZoom from './hooks/useImgZoom'
+
+export default {
+  ...DefaultTheme,
+  Layout,
+  setup() {
+    useImgZoom()
+  }
+}
+```
+
+
+### 黑白主题切换动画
+
+新建 `/theme/hooks/useThemeTransition.ts`
+
+```ts
+import { useData } from 'vitepress'
+import { nextTick, provide } from 'vue'
+
+/**
+ * 主题切换动画
+ */
+const useThemeTransition = () => {
+  const { isDark } = useData()
+  const enableTransitions = () =>
+    'startViewTransition' in document
+      && window.matchMedia('(prefers-reduced-motion: no-preference)').matches
+
+  provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
+    if (!enableTransitions()) {
+      isDark.value = !isDark.value
+      return
+    }
+  
+    const clipPath = [
+      `circle(0px at ${x}px ${y}px)`,
+      `circle(${Math.hypot(
+        Math.max(x, innerWidth - x),
+        Math.max(y, innerHeight - y)
+      )}px at ${x}px ${y}px)`
+    ]
+  
+    await document.startViewTransition(async () => {
+      isDark.value = !isDark.value
+      await nextTick()
+    }).ready
+  
+    document.documentElement.animate(
+      { clipPath: isDark.value ? clipPath.reverse() : clipPath },
+      {
+        duration: 360,
+        easing: 'ease-in',
+        pseudoElement: `::view-transition-${isDark.value ? 'old' : 'new'}(root)`
+      }
+    )
+  })
+}
+
+export default useThemeTransition
+```
+
+修改样式 `/theme/layout/index.css`
+
+```css
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root),
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root),
+.dark::view-transition-old(root) {
+  z-index: 9999;
+}
+
+.VPSwitchAppearance {
+  width: 22px !important;
+}
+
+.VPSwitchAppearance .check {
+  transform: none !important;
+}
+```
+
+
+在 `/theme/layout/index.vue` 中引入 `hooks` 和 `css`
+
+```vue
+<script setup>
+import useThemeTransition from '../hooks/useThemeTransition'
+import './index.css'
+
+useThemeTransition()
+</script>
+```
