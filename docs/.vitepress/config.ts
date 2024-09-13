@@ -1,6 +1,11 @@
 import { defineConfig } from 'vitepress'
 import { NavItem, SidebarMulti } from './type'
 
+// import useInitNavAuto from './useInitNavAuto'
+
+// const initNavAuto = useInitNavAuto()
+// const nav = await initNavAuto()
+
 const nav = [
   {
     link: '/leetcode/',
