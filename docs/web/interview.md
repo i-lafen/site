@@ -372,6 +372,36 @@ setTimeout(() => resolve('获取到的数据'), 1000)
   - 插件用来增强 `Vue` 功能
 
 
+### vite 插件开发
+
+- `vite` 插件导出是一个函数，可带入参，在使用插件时传入即可
+- 函数要 `return` 一个对象
+- 返回的对象要有 `name` 属性
+- 返回的对象中使用合适的钩子即可
+
+例如开发一个自动记录上次构建时间的 `vite` 插件，该插件每次构建都会将构建时间以注释方式插入到 `index.html` 中的 `body` 标签下，方便开发者在查看页面元素时可以知道上次构建时间，当然也可以插入一些其他的信息
+
+```js
+const injectBuildTime = () => {
+  return {
+    name: 'inject-build-time',
+    transformIndexHtml(html) {
+      const now = new Date().toLocaleString()
+      return html.replace(
+        '<body>',
+        `<body><!-- Last Build Time ${now} -->`
+      )
+    }
+  }
+}
+
+// vite.config.js
+export default defineConfig({
+  plugins: [vue(), injectBuildTime()], // 使用插件
+})
+```
+
+
 ### 虚拟 dom
 
 描述 `dom` 结构的 `js` 对象，相比于真实 `dom` ，更加轻便，对于需要频繁更新的 `dom` 结构，使用 虚拟 `dom` 更能体现其快速更新能力。
