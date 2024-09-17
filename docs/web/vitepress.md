@@ -206,14 +206,34 @@ https://{username}.github.io/{repository}
 
 #### deploy.yml 脚本内容
 
-- `name` 定义名称
-- `on` 节点表示触发工作流的事件，及分支名
-- `permission` 权限配置
-- `jobs` 节点会生成工作流要执行的步骤
-  - `build` 构建
-    - `run` 执行脚本
-    - `uses` 这里使用了 `pnpm` 下载依赖包，此时需要在项目的 `package.json` 中添加字段 `"packageManager": "pnpm@8.6.11"`
-  - `deploy` 部署
+- `name` 定义工作流名称
+- `on` 指定触发工作流的 `git hook` 事件、分支名，全匹配到则执行以下流程
+  - `permission` 权限配置
+  - `jobs` 节点会生成工作流要执行的步骤
+    - `build` 构建流程
+      - `runs-on` 指定运行环境，默认 `unbuntu-latest`
+      - `steps` 流程，一个 `-` 符号表示一个步骤， `name` 可选
+        - `run` 执行脚本
+        - `uses` 这里使用了 `pnpm` 下载依赖包，此时需要在项目的 `package.json` 中添加字段 `"packageManager": "pnpm@8.6.11"`
+    - `deploy` 部署流程
+
+
+一些配置说明， `deploy` 节点中的字段也差不多
+
+```yml
+- uses: actions/checkout@v4 # 拉取代码，使用的 github action 提供的工具
+- uses: actions/setup-node@v4 # 使用 node 环境
+  with:
+    node-version: 20 # node 版本
+- run: pnpm install # 安装依赖
+- run: pnpm docs:build # 构建
+- uses: actions/upload-pages-artifact@v3 # 上传构建完的文件
+  with:
+    path: docs/.vitepress/dist # 构建目录
+```
+
+
+以上 `github action` 的配置就差不多了，也可以使用 `Travis` 等工具来尝试下配置构建流程，添加更加丰富的功能，比如 `eslint` 、 `vitest` 等
 
 
 
@@ -393,3 +413,16 @@ import './index.css'
 useThemeTransition()
 </script>
 ```
+
+
+## Finally
+
+`vitepress` 的使用文档还是挺清晰的，新手基本看下文档就能配置运行构建了，基本零配置也能搭建一个静态博客，配合 `github action` 部署到 `github pages` 还能顺手熟悉下构建部署流程
+
+在 `vite.config.ts` 中配置 `nav` 和 `sidebar` 感觉还是挺麻烦的，本来想尝试自动匹配文件夹下 `md` 文件自动生成导航栏和侧边栏，但是 `nodejs` 脚本读取到的文件路径无法自己指定排序，所以还是手动配置吧
+
+
+
+## Reference
+
+- [VitePress](https://vitepress.dev/zh/guide/deploy#github-pages)

@@ -179,7 +179,5 @@ export default defineConfig({
       copyright: 'Copyright © 2023-present LAFEN'
     }
   },
-  sitemap: {
-    hostname: 'https://i-lafen.github.io/site'
-  }
+  sitemap: { hostname: 'https://i-lafen.github.io/site' }
 })
