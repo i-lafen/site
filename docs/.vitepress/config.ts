@@ -167,7 +167,7 @@ export default defineConfig({
   cleanUrls: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: 'logo.svg',
+    logo: '/logo.svg',
     nav,
     sidebar,
     outline: { level: 'deep', label: '' },
