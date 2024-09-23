@@ -624,7 +624,7 @@ class Component {
       }
     })
   }
-	render() {
+  render() {
     console.log('render：' + this.data.name)
   }
 }

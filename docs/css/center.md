@@ -7,7 +7,7 @@
 - `absolute` + `transform`
 - `flex` + `jusitify-content: center`
 
-# 垂直居中
+## 垂直居中
 
 - `line-height: height` （并非真的居中，除非 `font-size: 0`）
 - `absolute` + `transform`
