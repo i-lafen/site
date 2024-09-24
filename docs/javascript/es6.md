@@ -255,3 +255,7 @@ console.log(obj.foo) // 456
 
 
 
+## Reference
+
+[ES6 入门教程](https://es6.ruanyifeng.com/)
+
