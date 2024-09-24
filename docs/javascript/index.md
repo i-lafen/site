@@ -12,6 +12,23 @@
 - 箭头函数
 
 
+## ES6 新特性
+
+- `let` 、 `const`
+- 模板字符串
+- 解构赋值
+- 扩展运算符
+- 箭头函数
+- `class`
+- `Set` 、 `Map`
+- `Promise`
+- `Proxy` 、 `Reflect`
+- `Symbol`
+- `import`
+- `Generator` 、 `async` 、 `await`
+- `Iterator` 和 `for...of`
+
+
 ## JS 深入理解
 
 - 变量提升

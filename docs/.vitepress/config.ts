@@ -92,6 +92,7 @@ const nav = [
       { link: '/javascript/ts', text: 'TS' },
       { link: '/javascript/typescript', text: 'TypeScript' },
       { link: '/javascript/js', text: 'Js' },
+      { link: '/javascript/es6', text: 'ES6' },
       { link: '/javascript/hoisting', text: 'Hoisting' },
       { link: '/javascript/stack', text: 'Stack' },
       { link: '/javascript/scope', text: 'Scope' },
