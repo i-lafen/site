@@ -255,6 +255,96 @@ console.log(obj.foo) // 456
 
 
 
+### Symbol
+
+
+`ES6` 新的数据类型，表示独一无二的值，传入的参数为当前 `Symbol` 的描述，可以不传
+
+- `Symbol` 可以作为对象唯一 `key`
+- `Symbol` 作为 `key` 时不可遍历，但可以通过 `Object.getOwnPropertySymbols()` 获取，另外 `Reflect.ownKeys()` 也可以获取到 `Symbol` 类型的 `key`
+- `Symbol.describe()` 获取 `Symbol` 的描述
+- `Symbol.for()` 获取 `Symbol` ，传入相同的参数，返回相同的 `Symbol` ，无此 `Symbol` 时会创建新的 `Symbol` ，注意返回值是全局的，无论在 `iframe` 中还是 `service worker` 中都是同一个 `Symbol`
+- `Symbol.keyFor()` 获取 `Symbol` 类型值的 `key`
+
+
+
+
+### import
+
+`ES6` 模块化规范，即 `import` 和 `export` 模块导入、导出语法
+
+- `export` 只能导出三种类型：变量、函数、类
+- `export` 只能出现在模块顶层作用域
+- `export` 导出的变量就是本来的名字，但是也可以使用 `as` 来重命名
+- `export default` 导出一个默认变量，只能有一个默认
+- `import` 导入的变量都是只读的
+- `import` 时可以使用 `as` 做符号绑定
+- `import` 是静态编译的，编译阶段就执行，不可使用表达式和变量这些运行阶段才能得到的语法结构，同样是模块顶层使用
+- `export` 和 `import` 可以结合一起使用，相当于转发一下，当前模块并没有导入
+
+
+此外还可以使用 `import()` 来动态加载模块，返回一个 `Promise` 对象，因此可以做到 按需加载、条件加载、动态模块路径 等功能
+
+
+`import` 还可以暴露一些模块内部元信息
+
+- `import.meta` 获取当前模块的元信息，在模块内部使用
+  - `import.meta.url` 获取当前模块的路径 URL
+  - `import.meta.scriptElement` 获取加载当前模块的 `script` 标签，相当于 `document.currentScript`
+
+
+
+
+### Generator 生成器的了解
+
+
+`Generator` （生成器）是一种特殊的函数，它可以暂停执行并在需要时恢复执行。由 `ES6` 引入，使用 `function*` 定义。
+
+- 暂停和恢复执行：在函数体内部，使用 `yield` 关键字暂停，并产生一个值，然后使用 `next()` 恢复执行，并将新的值传递给 `yield` 表达式
+- 迭代器和可迭代对象： `Generator` 函数返回一个迭代器对象，可直接使用 `for...of` 来遍历生成的值
+- 惰性求值
+- 状态保存
+
+```js
+function* generatorFunction() {
+  yield 'Hello';
+  yield 'World';
+  return 'Ending';
+}
+const generator = generatorFunction(); // 返回可迭代对象
+console.log(generator.next().value); // 输出: Hello
+console.log(generator.next().value); // 输出: World
+console.log(generator.next().value); // 输出: Ending
+console.log(generator.next().done);  // 输出: true，表示迭代器已完成
+```
+
+`Generator` 函数适合用于处理 异步编程 和 迭代。但目前通常都使用 `async/await` 来做异步编程更直观。
+
+
+
+
+### Iterator 和 for...of
+
+JS 中原来表示集合的有 Array 和 Object ，但是现在加了 Set 和 Map ，所以需要一种统一的接口机制来遍历处理不同的集合结构，即 遍历器 Iterator
+
+
+Iterator 提供统一的访问机制 `for...of` ，任何数据结构只要部署 Symbol.iterator 接口，就可以被 `for...of` 循环遍历
+
+- Array
+- Map
+- Set
+- String
+- TypedArray
+- 函数 arguments 对象
+- NodeList 对象
+
+以上数据结构原生即具有 `Symbol.iterator` 接口，在 解构赋值、扩展运算符 当中，会默认调用 `Symbol.iterator` 方法
+
+
+注意 Object 没有 `Symbol.iterator` 接口，但可以通过 `Object.keys()` 后再遍历，或 使用 for...in 遍历，但 for...in 遍历时，会遍历原型上的自定义属性
+
+
+
 ## Reference
 
 [ES6 入门教程](https://es6.ruanyifeng.com/)
