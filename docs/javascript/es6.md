@@ -298,7 +298,7 @@ console.log(obj.foo) // 456
 ### Generator 生成器的了解
 
 
-`Generator` （生成器）是一种特殊的函数，它可以暂停执行并在需要时恢复执行。由 `ES6` 引入，使用 `function*` 定义。
+`Generator` （生成器）是一种特殊的函数，它可以暂停执行并在需要时恢复执行。由 `ES6` 引入，使用 `function*` 定义
 
 - 暂停和恢复执行：在函数体内部，使用 `yield` 关键字暂停，并产生一个值，然后使用 `next()` 恢复执行，并将新的值传递给 `yield` 表达式
 - 迭代器和可迭代对象： `Generator` 函数返回一个迭代器对象，可直接使用 `for...of` 来遍历生成的值
@@ -318,30 +318,30 @@ console.log(generator.next().value); // 输出: Ending
 console.log(generator.next().done);  // 输出: true，表示迭代器已完成
 ```
 
-`Generator` 函数适合用于处理 异步编程 和 迭代。但目前通常都使用 `async/await` 来做异步编程更直观。
+`Generator` 函数适合用于处理 异步编程 和 迭代。但目前通常都使用 `async/await` 来做异步编程更直观
 
 
 
 
 ### Iterator 和 for...of
 
-JS 中原来表示集合的有 Array 和 Object ，但是现在加了 Set 和 Map ，所以需要一种统一的接口机制来遍历处理不同的集合结构，即 遍历器 Iterator
+`JS` 中原来表示集合的有 `Array` 和 `Object` ，但是现在加了 `Set` 和 `Map` ，所以需要一种统一的接口机制来遍历处理不同的集合结构，即 遍历器 `Iterator`
 
 
-Iterator 提供统一的访问机制 `for...of` ，任何数据结构只要部署 Symbol.iterator 接口，就可以被 `for...of` 循环遍历
+`Iterator` 提供统一的访问机制 `for...of` ，任何数据结构只要部署 `Symbol.iterator` 接口，就可以被 `for...of` 循环遍历
 
-- Array
-- Map
-- Set
-- String
-- TypedArray
-- 函数 arguments 对象
-- NodeList 对象
+- `Array`
+- `Map`
+- `Set`
+- `String`
+- `TypedArray`
+- 函数 `arguments` 对象
+- `NodeList` 对象
 
 以上数据结构原生即具有 `Symbol.iterator` 接口，在 解构赋值、扩展运算符 当中，会默认调用 `Symbol.iterator` 方法
 
 
-注意 Object 没有 `Symbol.iterator` 接口，但可以通过 `Object.keys()` 后再遍历，或 使用 for...in 遍历，但 for...in 遍历时，会遍历原型上的自定义属性
+注意 `Object` 没有 `Symbol.iterator` 接口，但可以通过 `Object.keys()` 后再遍历，或 使用 `for...in` 遍历，但 `for...in` 遍历时，会遍历原型上的自定义属性
 
 
 
