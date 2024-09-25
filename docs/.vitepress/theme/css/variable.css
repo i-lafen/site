@@ -20,7 +20,7 @@
 /* 自定义 css 属性 制作旋转动画 */
 @property --rotate {
   syntax: "<angle>";
-  initial-value: 0deg;
+  initial-value: -45deg;
   inherits: false;
 }
 @keyframes spin {

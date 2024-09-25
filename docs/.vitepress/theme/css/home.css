@@ -1,7 +1,7 @@
 /* 主页样式 */
 
 /* 背景图 使用 css 变量 实现旋转动画 */
-.image-bg::before {
+/* .image-bg::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -10,10 +10,21 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  /* 是必须创建一个新的层叠上下文 */
-  isolation: isolate;
-  background-image: linear-gradient(var(--rotate), var(--vp-c-brand-1) 50%, var(--vp-c-brand-7) 50%);
+  background-image: linear-gradient(
+    var(--rotate),
+    var(--vp-c-brand-1) 50%,
+    var(--vp-c-brand-7) 50%);
   animation: spin 5s linear infinite;
+} */
+
+.VPHome .image-bg {
+  background-image: linear-gradient(
+    var(--rotate),
+    var(--vp-c-brand-1) 50%,
+    var(--vp-c-brand-7) 50%);
+  animation: spin 5s linear infinite;
+  /* 不可直接用 filter， safari 在旋转时，背景圆角会失效 */
+  backdrop-filter: blur(50px);
 }
 
 /* 顶部 logo */
