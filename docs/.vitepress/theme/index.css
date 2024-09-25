@@ -1,69 +1,7 @@
-:root {
-  /* 修改主题色 */
-  --vp-c-brand-1: #ff0073;
-  --vp-c-brand-2: #d6156c;
-  --vp-c-brand-3: #ab2561;
-  /* 新增颜色 */
-  --vp-c-brand-4: #ff007388;
-  --vp-c-brand-5: #a8b1ff;
-  --vp-c-brand-6: #5c73e7;
-  --vp-c-brand-7: #3e63dd;
+@import "./css/variable.css";
 
-  /* 首页背景图 */
-  --vp-home-hero-image-background-image: linear-gradient(-45deg, var(--vp-c-brand-1) 50%, var(--vp-c-brand-7) 50%);
-  --vp-home-hero-image-filter: blur(60px);
-  /* 首页标题 */
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(60deg, var(--vp-c-brand-1) 30%, var(--vp-c-brand-7) 70%);
-}
+@import "./css/zoom.css";
+@import "./css/scrollbar.css";
 
-/* 黑色主题 - 图片降低亮度 */
-html.dark .main img:not(.VPImage) {
-  filter: brightness(0.6);
-}
-.main img {
-  box-shadow: 0 0 5px 0 var(--vp-c-brand-4);
-}
-
-/* 图片预览 */
-.medium-zoom-overlay {
-  z-index: 20;
-}
-.medium-zoom-image {
-  z-index: 21;
-}
-
-/* 滚动条轨道样式 */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-/* 滚动条滑块样式 */
-::-webkit-scrollbar-thumb {
-  background-color: var(--vp-c-text-3);
-  border-radius: 4px;
-}
-/* 滚动条轨道hover状态样式 */
-::-webkit-scrollbar-track:hover {
-  background-color: var(--vp-c-bg-soft);
-}
-/* 滚动条滑块hover状态样式 */
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--vp-c-text-2);
-}
-
-/* 顶部logo */
-.VPNavBarTitle:hover a {
-  color: var(--vp-c-brand-1);
-  transition: color 0.2s ease-in;
-}
-
-/* 文章标题 */
-h1 {
-  color: var(--vp-c-brand-1);
-}
-
-/* 文章中的 code */
-.vp-doc :not(pre, h1, h2, h3, h4, h5, h6) > code {
-  color: var(--vp-c-brand-1);
-}
+@import "./css/home.css";
+@import "./css/page.css";

@@ -1,0 +1,18 @@
+/* 文章中的样式 */
+
+/* 黑色主题 - 图片降低亮度 */
+html.dark .main img:not(.VPImage) {
+  filter: brightness(0.6);
+}
+.main img {
+  box-shadow: 0 0 5px 0 var(--vp-c-brand-4);
+}
+
+/* 文章标题 */
+h1 {
+  color: var(--vp-c-brand-1);
+}
+/* 文章中的 code */
+.vp-doc :not(pre, h1, h2, h3, h4, h5, h6) > code {
+  color: var(--vp-c-brand-1);
+}

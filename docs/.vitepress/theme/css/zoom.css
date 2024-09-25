@@ -1,0 +1,7 @@
+/* 图片预览 */
+.medium-zoom-overlay {
+  z-index: 20;
+}
+.medium-zoom-image {
+  z-index: 21;
+}

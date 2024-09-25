@@ -1,0 +1,24 @@
+/* 主页样式 */
+
+/* 背景图 使用 css 变量 实现旋转动画 */
+.image-bg::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: linear-gradient(var(--rotate), var(--vp-c-brand-1) 50%, var(--vp-c-brand-7) 50%);
+  animation: spin 5s linear infinite;
+}
+
+/* 顶部 logo */
+.VPNavBarTitle .title {
+  color: var(--vp-c-brand-1);
+}
+.VPNavBarTitle:hover .title {
+  color: var(--vp-c-brand-2);
+  transition: color 0.2s ease-in;
+}

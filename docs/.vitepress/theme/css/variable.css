@@ -1,0 +1,29 @@
+:root {
+  /* 修改主题色 */
+  --vp-c-brand-1: #ff0073;
+  --vp-c-brand-2: #d6156c;
+  --vp-c-brand-3: #ab2561;
+  /* 新增颜色 */
+  --vp-c-brand-4: #ff007388;
+  --vp-c-brand-5: #a8b1ff;
+  --vp-c-brand-6: #5c73e7;
+  --vp-c-brand-7: #3e63dd;
+
+  /* 首页背景图 */
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, var(--vp-c-brand-1) 50%, var(--vp-c-brand-7) 50%);
+  --vp-home-hero-image-filter: blur(60px);
+  /* 首页标题 */
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(60deg, var(--vp-c-brand-1) 30%, var(--vp-c-brand-7) 70%);
+}
+
+/* 自定义 css 属性 制作旋转动画 */
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes spin {
+  0% { --rotate: 0deg; }
+  100% { --rotate: 360deg; }
+}
