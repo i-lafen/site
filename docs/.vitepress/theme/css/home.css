@@ -10,6 +10,8 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  /* 是必须创建一个新的层叠上下文 */
+  isolation: isolate;
   background-image: linear-gradient(var(--rotate), var(--vp-c-brand-1) 50%, var(--vp-c-brand-7) 50%);
   animation: spin 5s linear infinite;
 }
