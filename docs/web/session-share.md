@@ -22,6 +22,7 @@
 - `sessionStorage` 只在打开新标签页时（ `window.open` ）复制一份数据给新标签页，任一标签页数据修改并不会同步给其他标签页，这是因为 `sessionStorage` 的作用范围和生命周期只限于当前会话窗口
 - `BroadcastChannel` 是浏览器的消息通信机制，可以实时通过广播通信
 - `webWorker` 是独立的后台线程，也可以在其中实现数据通信共享
+- `sharedWorker` 是浏览器提供的多标签共享线程，可以实时通信实现数据共享，无论 `iframe` 中还是其他标签页，同源即可访问
 - `window.postMessage` 可以给指定的标签窗口发送消息
 - `IndexedDB` 是浏览器提供的本地数据库
 - `WebSocket` 需要服务端支持，但能实现不同浏览器间的数据同步，在线文档类的需求中常见使用
