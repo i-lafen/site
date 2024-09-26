@@ -24,6 +24,7 @@
     var(--vp-c-brand-7) 50%);
   animation: spin 5s linear infinite;
   /* 不可直接用 filter， safari 在旋转时，背景圆角会失效 */
+  filter: blur(60px);
   backdrop-filter: blur(50px);
 }
 
