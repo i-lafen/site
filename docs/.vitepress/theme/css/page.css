@@ -49,3 +49,6 @@ html.dark h6::before {
 .vp-doc :not(pre, h1, h2, h3, h4, h5, h6) > code {
   color: var(--vp-c-brand-1);
 }
+.vp-doc strong, .vp-doc b {
+  color: var(--vp-c-brand-6);
+}
