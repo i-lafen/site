@@ -2,7 +2,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 /**
- * 此版本 vitepress@1.0.0-rc.7 会忽略 public 文件夹内容，故暂时手动拷贝
+ * 此版本 vitepress@1.0.0-rc.7 有时候会忽略 public 文件夹内容
+ * 故暂时手动拷贝
+ * 但是现在貌似不会了，先不用了
  */
 const init = async () => {
   const sourceDir = './docs/.vitepress/public'

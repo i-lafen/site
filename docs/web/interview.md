@@ -211,6 +211,33 @@ setTimeout(() => resolve('获取到的数据'), 1000)
 
 ## 网络相关
 
+
+
+### http 常见状态码
+
+- `1xx` - 信息性状态码
+  - `101 Switching Protocols` 切换协议，如 切换到 `websocket`
+- `2xx` - 成功状态码
+  - `200 OK` 请求成功
+- `3xx` - 重定向状态码
+  - `301 Moved Permanently` 永久重定向
+  - `302 Found` 临时重定向
+  - `304 Not Modified` 资源未修改，协商缓存
+- `4xx` - 客户端错误状态码
+  - `400 Bad Request` 请求错误
+  - `401 Unauthorized` 未授权，权限失效
+  - `403 Forbidden` 禁止访问
+  - `404 Not Found` 资源不存在
+  - `405 Method Not Allowed` 请求方法不允许
+- `5xx` - 服务器错误状态码
+  - `500 Internal Server Error` 服务器内部错误
+  - `502 Bad Gateway` 网关错误，无效响应
+  - `503 Service Unavailable` 服务不可用
+  - `504 Gateway Timeout` 网关超时
+
+
+
+
 ### http 各个版本特点
 
 - `http0.9`
@@ -286,7 +313,7 @@ setTimeout(() => resolve('获取到的数据'), 1000)
 
 `websocket` 是一种基于 `tcp` 协议的双向通信协议。
 
-- 利用 `http` 建立连接，首先建立握手过程，与普通 `http` 请求类似，但包含了一些特殊头部字段，例如 `Upgrade: Websocket` 和 `Connection: Upgrade`
+- 利用 `http` 建立连接，首先建立握手过程，与普通 `http` 请求类似，但包含了一些特殊头部字段与状态码 `101` ，例如 `Upgrade: Websocket` 和 `Connection: Upgrade`
 - 建立 `tcp` 连接
 - 双向通信
 - 断开连接，任意一方发送特殊的控制帧（ `Close Frame` ）
