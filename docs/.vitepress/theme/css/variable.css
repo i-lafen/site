@@ -14,7 +14,7 @@
   --vp-home-hero-image-filter: blur(60px);
   /* 首页标题 */
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(60deg, var(--vp-c-brand-1) 30%, var(--vp-c-brand-7) 70%);
+  /* --vp-home-hero-name-background: linear-gradient(60deg, var(--vp-c-brand-1) 30%, var(--vp-c-brand-7) 70%); */
 }
 
 /* 自定义 css 属性 制作旋转动画 */
@@ -26,4 +26,9 @@
 @keyframes spin {
   0% { --rotate: 0deg; }
   100% { --rotate: 360deg; }
+}
+
+@keyframes maskedAnimation {
+  0% { background-position: 0 0; }
+  100% { background-position: -100% 0; }
 }

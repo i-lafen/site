@@ -18,12 +18,12 @@ h6 {
   color: var(--vp-c-brand-1);
 }
 
-h1::before,
-h2::before,
-h3::before,
-h4::before,
-h5::before,
-h6::before {
+.main h1::before,
+.main h2::before,
+.main h3::before,
+.main h4::before,
+.main h5::before,
+.main h6::before {
   content: attr(id);
   position: absolute;
   bottom: 0;
@@ -46,9 +46,9 @@ html.dark h6::before {
 
 
 /* 文章中的 code */
-.vp-doc :not(pre, h1, h2, h3, h4, h5, h6) > code {
+.main :not(pre, h1, h2, h3, h4, h5, h6) > code {
   color: var(--vp-c-brand-1);
 }
-.vp-doc strong, .vp-doc b {
+.main strong, .main b {
   color: var(--vp-c-brand-6);
 }
