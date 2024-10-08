@@ -26,7 +26,7 @@
 - **事件通信** ， 通过 `postMessage` 和 `message` 事件来与主线程通信
 
 
-`sharedworker` 与 `webworker` 类似，但可以做到同域下共享
+`sharedworker` 与 `webworker` 类似，但 `sharedworker` 可以做到同源下数据共享
 
 
 
