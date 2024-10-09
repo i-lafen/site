@@ -2,10 +2,17 @@
 
 /* 背景图 使用 css 变量 实现旋转动画 */
 .VPHome .image-bg {
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     var(--rotate),
     var(--vp-c-brand-1) 50%,
-    var(--vp-c-brand-7) 50%);
+    var(--vp-c-brand-7) 50%); */
+  background-image:
+    radial-gradient(10% 10% at 75% 50% ,var(--vp-c-brand-1) 50%, transparent 50%),
+    radial-gradient(10% 10% at 25% 50% ,var(--vp-c-brand-7) 50%, transparent 50%),
+    radial-gradient(50% 50% at 25% 50% ,var(--vp-c-brand-1) 50%, transparent 50%),
+    radial-gradient(50% 50% at 75% 50% ,var(--vp-c-brand-7) 50%, transparent 50%),
+    linear-gradient(var(--vp-c-brand-1) 50%, var(--vp-c-brand-7) 50%);
+  transform: translate(-50%, -50%) rotate(var(--rotate));
   animation: spin 5s linear infinite;
   /* 不可直接用 filter， safari 在旋转时，背景圆角会失效 */
   filter: blur(60px);
