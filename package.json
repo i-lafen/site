@@ -12,7 +12,7 @@
     "dev": "vitepress dev docs --host",
     "build": "vitepress build docs",
     "preview": "vitepress preview docs",
-    "push": "git add . && git commit -m 'build' && git push"
+    "push": "git add . && git commit -m 'feat: build' && git push"
   },
   "keywords": [],
   "author": "LAFEN",
