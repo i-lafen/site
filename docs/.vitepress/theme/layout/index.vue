@@ -2,10 +2,12 @@
 import DefaultTheme from 'vitepress/theme'
 import useSpendTime from '../hooks/useSpendTime'
 import useThemeTransition from '../hooks/useThemeTransition'
+import useImgZoom from '../hooks/useImgZoom'
 import './index.css'
 
 const { text, textStyle, colorStyle } = useSpendTime()
 useThemeTransition()
+useImgZoom()
 </script>
 
 <template>
