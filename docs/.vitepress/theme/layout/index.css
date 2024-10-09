@@ -1,23 +1,47 @@
+/* 黑白主题切换 */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
-
 ::view-transition-old(root),
 .dark::view-transition-new(root) {
   z-index: 1;
 }
-
 ::view-transition-new(root),
 .dark::view-transition-old(root) {
   z-index: 9999;
 }
-
 .VPSwitchAppearance {
   width: 22px !important;
 }
-
 .VPSwitchAppearance .check {
   transform: none !important;
+}
+
+/* 图片预览 */
+.medium-zoom-overlay {
+  z-index: 20;
+}
+.medium-zoom-image {
+  z-index: 21;
+}
+
+/* 滚动条轨道样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+/* 滚动条滑块样式 */
+::-webkit-scrollbar-thumb {
+  background-color: var(--vp-c-text-3);
+  border-radius: 4px;
+}
+/* 滚动条轨道hover状态样式 */
+::-webkit-scrollbar-track:hover {
+  background-color: var(--vp-c-bg-soft);
+}
+/* 滚动条滑块hover状态样式 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--vp-c-text-2);
 }

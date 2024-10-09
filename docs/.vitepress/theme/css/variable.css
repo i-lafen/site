@@ -30,7 +30,7 @@
   0% { --rotate: 0deg; }
   100% { --rotate: 360deg; }
 }
-
+/* 标题渐变动画 */
 @keyframes maskedAnimation {
   0% { background-position: 0 0; }
   100% { background-position: -100% 0; }
