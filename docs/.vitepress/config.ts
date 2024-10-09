@@ -161,8 +161,8 @@ const base = '/site/'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   base,
-  title: "LAFEN",
-  description: "🍒Personal Blog🍒",
+  title: 'LAFEN',
+  description: 'LAFEN',
   head: [['link', { rel: 'icon', href: base + 'logo.svg' }]],
   lastUpdated: false,
   cleanUrls: true,
