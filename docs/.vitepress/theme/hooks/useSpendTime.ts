@@ -17,7 +17,7 @@ const useSpendTime = () => {
   watch(() => route.path, () => nextTick(initStat))
 
   const spendTime = computed(() => Math.round(count.value / 500))
-  const text = computed(() => `本文共 ${count.value} 字，阅读约 ${spendTime.value} 分钟`)
+  const text = computed(() => `本文约 ${count.value} 字，阅读约 ${spendTime.value} 分钟`)
 
   const textStyle = { display: 'flex', marginBottom: '1rem' }
   const colorStyle = { color: 'var(--vp-c-text-3)' }

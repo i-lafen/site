@@ -15,6 +15,9 @@
   /* 首页标题 */
   --vp-home-hero-name-color: transparent;
   /* --vp-home-hero-name-background: linear-gradient(60deg, var(--vp-c-brand-1) 30%, var(--vp-c-brand-7) 70%); */
+
+  /* 平滑滚动 */
+  scroll-behavior: smooth;
 }
 
 /* 自定义 css 属性 制作旋转动画 */

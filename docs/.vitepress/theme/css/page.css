@@ -1,29 +1,18 @@
 /* 文章中的样式 */
 
 /* 黑色主题 - 图片降低亮度 */
-html.dark .main img:not(.VPImage) {
+html:is(.dark) .main img:not(.VPImage) {
   filter: brightness(0.6);
 }
-.main img {
+.main img:not(.VPImage) {
   box-shadow: 0 0 5px 0 var(--vp-c-brand-4);
 }
 
 /* 文章标题 */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   color: var(--vp-c-brand-1);
 }
-
-.main h1::before,
-.main h2::before,
-.main h3::before,
-.main h4::before,
-.main h5::before,
-.main h6::before {
+.main :where(h1, h2, h3, h4, h5, h6)::before {
   content: attr(id);
   position: absolute;
   bottom: 0;
@@ -34,21 +23,15 @@ h6 {
   color: transparent;
   background-color: yellow;
 }
-
-html.dark h1::before,
-html.dark h2::before,
-html.dark h3::before,
-html.dark h4::before,
-html.dark h5::before,
-html.dark h6::before {
+html:is(.dark) :where(h1, h2, h3, h4, h5, h6)::before {
   filter: brightness(20%);
 }
-
 
 /* 文章中的 code */
 .main :not(pre, h1, h2, h3, h4, h5, h6) > code {
   color: var(--vp-c-brand-1);
 }
-.main strong, .main b {
+/* 粗体 */
+.main :where(strong, b) {
   color: var(--vp-c-brand-6);
 }
