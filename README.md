@@ -1,4 +1,4 @@
-# Persional Blog
+# Personal Blog
 
 Blog: https://i-lafen.github.io/site
 
