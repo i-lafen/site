@@ -1,10 +1,10 @@
 {
   "name": "site",
   "version": "1.0.0",
-  "description": "Lafen's Site",
+  "description": "lafen's site",
   "main": "index.js",
   "type": "module",
-  "packageManager": "pnpm@8.6.11",
+  "packageManager": "pnpm@9.9.0",
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",

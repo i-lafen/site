@@ -3,12 +3,12 @@
 layout: home
 
 hero:
-  name: "LAFEN"
-  text: "🍒Personal Blog🍒"
+  name: LAFEN
+  text: 🍒Personal Blog🍒
   tagline: My Study Notes
   image:
     src: /logo.svg
-    alt: Lafen
+    alt: LAFEN
   actions:
     - theme: brand
       text: Http
@@ -36,6 +36,4 @@ features:
   - title: 微前端
     icon: 🪡
     details: Wujie | Micro App | Qiankun | Webpack5 Module Federation
-
-footer: MIT Licensed | Copyright © 2023-present LAFEN
 ---
