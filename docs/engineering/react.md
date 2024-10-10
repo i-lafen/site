@@ -168,9 +168,9 @@ isBatchingUpdates = false // 结束标志
 
 ###### flushSync 获取最新数据
 
-React@18 将 setState 视为 请求 而不是立即更新的命令， React@18 将异步批量更新他们。
+`React@18` 将 `setState` 视为 请求 而不是立即更新的命令， `React@18` 将异步批量更新他们。
 
-但在极少数情况下，你可能需要强制同步应用特定的 state 更新，此时就可以使用 `flushSync`
+但在极少数情况下，你可能需要强制同步应用特定的 `state` 更新，此时就可以使用 `flushSync`
 
 ```js
 import { flushSync } from 'react-dom'
