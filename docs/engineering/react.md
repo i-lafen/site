@@ -46,11 +46,15 @@ const MyComponent = () => {
 
 #### useState 是异步还是同步
 
-`React@17` 和 `React@18` 当中略有些差别， `React@18` 中引入了批量异步处理
+`React@17` 和 `React@18` 当中略有些差别， `React@18` 中引入了批量异步处理，可以认为是 **异步**
 
-而 `React@17` 当中就比较混乱， 以下以 `React@17` 为例
+而 `React@17` 当中就比较混乱，可以认为 **既是异步也是同步的**， 以下以 `React@17` 为例
 
-需要注意的是， `setCount` 之后，立即获取 `count` 的值，会发现 `count` 的值还是之前的并没有立即改变，因为获取的仍是当前组件的一份快照，无论连续设置多少次仍是原来的值，并且会合并更新
+
+##### React@17 中 useState 的异步场景
+
+
+在 `setCount` 之后，立即获取 `count` 的值，会发现 `count` 的值还是之前的并没有立即改变，因为获取的仍是当前组件的一份快照，无论连续设置多少次仍是原来的值，并且会合并更新
 
 ```jsx
 // 多次设置 获取的 count 仍是当前快照，并且最后会合并更新，即只更新一次
@@ -73,6 +77,9 @@ const handleClick = () => {
   console.log(count) // 2
 }
 ```
+
+
+##### React@17 中 useState 的同步场景
 
 
 此时你可以认为说 `setState` 是异步，但是这样的说法并不完全正确，因为 `setState` 在 `setTimeout` 、 `dom` 事件、 `React` 声明周期当中却是同步的
@@ -103,6 +110,8 @@ useEffect(() => {
   console.log(count) // 1
 })
 ```
+
+###### React@17的 transaction 事务机制
 
 这是因为 `React@17` 的 `setState` 当中存在 `batchUpdate` 机制，要看获取值时候是否在这个机制当中，即 `transaction` 事务机制
 
@@ -143,16 +152,35 @@ setTimeout(() => {
 isBatchingUpdates = false // 结束标志
 ```
 
-所以说 `setState` **本质上是同步** 代码，但是 `React@17` 中刻意将其设计成 "异步" 的样子，即延迟到同一任务队列的最后执行，所以造成了我们通常将其理解成 "异步"
+所以说 `setState` **本质上是同步** 代码，但是 `React@17` 中刻意将其设计成 **异步** 的样子，即延迟到同一任务队列的最后执行，所以造成了我们通常将其理解成 **异步**
 
 在传入函数回调、 在 `setTimeout` 或 `dom` 事件回调中更改都可以看成是能够同步获取最新值
 
-当然以上代码是基于 `React@17` 的，弯弯绕绕的很
+> 当然以上代码是基于 `React@17` 的，弯弯绕绕的很
 
+
+##### React@18 中 useState 是异步
 
 而 `React@18` 当中引入了自动批处理功能，就是异步更新了（ `Auto Batch` ），所有的 `setState` 都是异步批量执行了，就不存在之前的问题了
 
 当然其异步并非借助 `js` 当中的 异步 `api` ， 而是 `react@18` 中自己设计的异步调度
+
+
+###### flushSync 获取最新数据
+
+React@18 将 setState 视为 请求 而不是立即更新的命令， React@18 将异步批量更新他们。
+
+但在极少数情况下，你可能需要强制同步应用特定的 state 更新，此时就可以使用 `flushSync`
+
+```js
+import { flushSync } from 'react-dom'
+
+// 这里相当于一次批处理， flushSync 回调执行完后会立马执行一次 render 函数
+flushSync(() => {
+  this.setState({ count: 2 })
+})
+console.log(this.state.count) // 2
+```
 
 
 
