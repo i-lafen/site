@@ -141,6 +141,7 @@ const nav = [
       { link: '/web/pattern', text: 'Pattern' },
       { link: '/web/session-share', text: 'Session Share' },
       { link: '/web/fabric-editor', text: 'Fabric Editor' },
+      { link: '/web/form-design', text: 'Form Design' },
       { link: '/web/threejs', text: 'ThreeJs' },
       { link: '/web/vitepress', text: 'VitePress' },
       { link: '/web/interview', text: 'Interview' },
