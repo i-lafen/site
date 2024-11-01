@@ -241,12 +241,12 @@ defineOptions({ name: 'RenderInput' })
 #### 表单和组件属性数据
 
 
-右侧的表单、栅栏、组件属性，都是来自于 schema ，在点击栅栏和组件时，需要记录当前点击的是哪个组件，哪个栅栏，其对应关系如下
+右侧的表单、栅栏、组件属性，都是来自于 `schema` ，在点击栅栏和组件时，需要记录当前点击的是哪个组件 `currentItem` ，哪个栅栏 `currentRow` ，其对应关系如下
 
 - `schema.formProps` 表单属性
 - `schema.fieldList[index]`
   - `currentItem.formItemProps` 表单项属性
-  - `currentItem.colProps` 栅栏属性
+  - `currentItem.colProps / currentRow.props` 栅栏属性
   - `currentItem.props` 组件属性
 
 
@@ -437,7 +437,7 @@ const handleDownload = () => {
 </template>
 ```
 
-`printHtml` 方法如下
+其中 `printHtml` 方法如下
 
 ```js
 // 设置打印样式
