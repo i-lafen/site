@@ -4,9 +4,9 @@ import {
   ref,
   unref,
   watch
-} from "./chunk-ORDIFU43.js";
+} from "./chunk-E7RTOTFC.js";
 
-// node_modules/.pnpm/@vueuse+shared@10.11.1_vue@3.4.38/node_modules/@vueuse/shared/index.mjs
+// node_modules/.pnpm/@vueuse+shared@10.11.1_vue@3.5.12/node_modules/@vueuse/shared/index.mjs
 function tryOnScopeDispose(fn) {
   if (getCurrentScope()) {
     onScopeDispose(fn);
@@ -41,7 +41,7 @@ function identity(arg) {
   return arg;
 }
 
-// node_modules/.pnpm/@vueuse+core@10.11.1_vue@3.4.38/node_modules/@vueuse/core/index.mjs
+// node_modules/.pnpm/@vueuse+core@10.11.1_vue@3.5.12/node_modules/@vueuse/core/index.mjs
 function unrefElement(elRef) {
   var _a;
   const plain = toValue(elRef);
@@ -1121,7 +1121,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
   return trap;
 };
 
-// node_modules/.pnpm/@vueuse+integrations@10.11.1_focus-trap@7.5.4_vue@3.4.38/node_modules/@vueuse/integrations/useFocusTrap.mjs
+// node_modules/.pnpm/@vueuse+integrations@10.11.1_focus-trap@7.5.4_vue@3.5.12/node_modules/@vueuse/integrations/useFocusTrap.mjs
 function useFocusTrap(target, options = {}) {
   let trap;
   const { immediate, ...focusTrapOptions } = options;
