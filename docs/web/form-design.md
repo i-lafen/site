@@ -43,7 +43,8 @@
 
 
 - 约定组件的描述配置 `Json Schema` ，由 `json` 来描述如何生成一个组件
-- 根据 `json` 来遍历渲染组件，并生成对应的组件属性编辑器
+- 根据 `json` 来遍历渲染组件，并生成对应的组件编辑器
+- 组件的属性编辑也同样使用 `json` 来描述，遍历生成组件属性的编辑
 - 使用 `el-form` 包裹统一配置，使用 `el-row` 方便实现栅栏布局
 - 拖拽组件到另一个列表使用 `vue-draggable-plus` 需要配置 `group`
 - 其他的 `json` 复制编辑、打印下载等功能则借助 `codemirror` 等来完成即可
@@ -356,10 +357,9 @@ export const componentPropsMap = {
 
 ### schema 查看、复制
 
-页面中显示 `schema` 编辑 和 复制 都可以依赖依赖包来完成，使用到以下 `npm` 包
+页面中显示 `schema` 编辑 和 复制 都可以使用依赖包来完成，使用到以下 `npm` 包
 
-- `vue-codemirror` 支持 `vue3` 的代码编辑器
-- `codemirror` 代码编辑 核心包
+- `vue-codemirror` 支持 `vue3` 的代码编辑器，注意还需要 `codemirror` 核心包
 - `@codemirror/lang-json` 语言包支持 `json` 显示编辑
 - `@codemirror/theme-one-dark` 暗色主题包，可不需要
 - `vue-clipboard3` 复制代码到剪切板，支持 `vue3`
@@ -393,7 +393,6 @@ const handleCoopy = async () => {
     :extensions="extensions"
     :tab-size="2"
     indent-with-tab
-    @change="handleCodeChange"
   />
 
   <el-button @click="handleCoopy">复制</el-button>
@@ -419,7 +418,7 @@ const handlePrint = () => {
   printHtml(htmlStr.value)
 }
 // 下载
-const handleDownload = () => {
+const handleDownload = async () => {
   const cavs = await html2canvas(document.querySelector('#preview-contanier'))
   const link = document.createElement('a')
   link.href = cavs.toDataURL()
@@ -493,7 +492,6 @@ const getLoadPromise = dom => {
 export const printHtml = html => {
   const style = getStyle()
   const container = getContainer(html)
-
   document.body.appendChild(style)
   document.body.appendChild(container)
   getLoadPromise(container).then(() => {
@@ -511,6 +509,12 @@ export const printHtml = html => {
 
 保存模板则直接使用 `localStorage` 来保存，注意生成 唯一 `id` 来标记不同 模板 和 模板名称 即可
 
+
+## 总结
+
+- 主要在于组件描述的 `json` 的约定，通过 `json` 来描述表单渲染，拖拽放置组件即直接操作 `json`
+- 组件属性编辑同样也是通过 `json` 来渲染，通过 `v-model` 双向绑定即可
+- `vue-codemirror` 支持多种语言的代码编辑，也支持多种主题
 
 
 
