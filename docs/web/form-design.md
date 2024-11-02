@@ -15,7 +15,7 @@
 
 - 支持常见表单组件拖拽放置、排序、编辑等功能
 - 保存、编辑、删除模板
-- `Json Schema` 复制、编辑生成表单，可预览并下载打印表单
+- `Json Schema` 复制、编辑生成表单，可 预览并 下载 打印表单
 
 ![form-design-page](./images/form-design-page.png)
 
@@ -59,7 +59,7 @@
 #### tagList 数据
 
 
-左侧表单组件列表 `tagList` ，可以定义渲染的组件类型 `type` ，和对应的 `props` 属性
+左侧 **表单组件** 列表 `tagList` ，可以定义渲染的组件类型 `type` ，和对应的 `props` 属性
 
 另外 组件是 包裹在 `el-col > el-form-item` 中的，所以在这里定义 `el-col` 和 `el-form-item` 属性
 
@@ -156,7 +156,7 @@ const tagList = [
 #### schema 数据
 
 
-页面渲染的表单数据，需要包含 `form` 属性 和 字段，以及组件描述列表 `fieldList` ， `fieldList` 就是由 `tagList` 中复制过来的组件描述
+页面渲染的表单数据，需要包含 `form` **属性** 和 **字段**，以及组件描述列表 `fieldList` ， `fieldList` 就是由 `tagList` 中复制过来的组件描述
 
 ```vue
 <script setup>
@@ -173,7 +173,7 @@ const schema = ref({
 注意这里只定义了 `formProps` 属性，因为组件层级为 `el-form > el-row > el-col > el-form-item > el-input` ，所以这里将 `formProps` 放到最外层，方便统一配置
 
 
-基于这个层级，通过递归遍历生成对应的表单，生成表单属性编辑器，这里使用 `el-form` 包裹统一配置，使用 `el-row` 方便实现栅栏布局
+基于这个层级，通过遍历生成对应的表单，生成表单属性编辑器，这里使用 `el-form` 包裹统一配置，使用 `el-row` 方便实现栅栏布局
 
 ```vue
 <script setup>
@@ -219,7 +219,7 @@ const componentMap = {
 </template>
 ```
 
-这里的拖拽组件使用了指令方式，至于 `RenderInput` ，实际上也是 `el-input` 组件，只是封装了一层绑定一些属性，方便使用，其他组件也类似
+这里的拖拽组件使用了 指令方式，至于 `RenderInput` ，实际上也是 `el-input` 组件，只是封装了一层绑定一些属性，方便使用，其他组件也类似
 
 ```vue
 <script setup>
@@ -251,7 +251,7 @@ defineOptions({ name: 'RenderInput' })
   - `currentItem.props` 组件属性
 
 
-表单、表单项属性根据 `el-form` 和 `el-form-item` 文档属性来定义编辑的组件，同样根据 `json` 来定义渲染，以下是个例子
+表单、表单项属性 根据 `el-form` 和 `el-form-item` 文档属性来定义编辑的组件，同样根据 `json` 来定义渲染，示例如下
 
 ```js
 // el-form 的 props 属性
@@ -298,7 +298,7 @@ export const formItemPropsList = [
 </template>
 ```
 
-而 `el-form-item` 属性也类似这样遍历绑定编辑
+而 `el-form-item` 属性 也类似这样遍历绑定编辑
 
 ```vue
 <template>
@@ -328,7 +328,7 @@ export const formItemPropsList = [
 那 `el-row` 和 `el-col` 的属性编辑基本也是如此实现的，这里就不再赘述
 
 
-麻烦的是 各种表单组件的属性配置，每一个表单组件都得定义他们对应的 `props` 属性，例如常见的 `input` 组件
+麻烦的是 各种表单组件的属性配置，每一个表单组件都得一一定义它们对应的 `props` 属性，例如常见的 `input` 组件
 
 ```js
 export const componentPropsMap = {
@@ -502,7 +502,7 @@ export const printHtml = html => {
 }
 ```
 
-这里由于 `window.print()` 只能打印整个页面，所以打印内容默认时隐藏的，打印时将 `body` 原来内容隐藏，然后将需要打印的内容挂载到页面中显示，再使用 `window.print()` 来打印
+这里由于 `window.print()` 只能打印整个页面，所以打印内容默认是隐藏的，打印时 将 `body` 原来内容隐藏，然后将需要打印的内容显示到页面中，再使用 `window.print()` 来打印
 
 
 ### 保存模板
@@ -512,7 +512,7 @@ export const printHtml = html => {
 
 ## 总结
 
-- 主要在于组件描述的 `json` 的约定，通过 `json` 来描述表单渲染，拖拽放置组件即直接操作 `json`
+- 主要在于组件描述的 `json` 的约定，通过 `json` 来描述表单渲染，拖拽放置组件 即 直接操作 `json`
 - 组件属性编辑同样也是通过 `json` 来渲染，通过 `v-model` 双向绑定即可
 - `vue-codemirror` 支持多种语言的代码编辑，也支持多种主题
 
@@ -524,5 +524,5 @@ export const printHtml = html => {
 - [vue-codemirror](https://github.surmon.me/vue-codemirror)
 - [html2canvas](https://html2canvas.hertzen.com/)
 - [vue-clipboard3](https://www.npmjs.com/package/vue-clipboard3)
-- [Post](https://juejin.cn/post/7062648728405934087?searchId=202411011341473F2BBAB536C1B8041161)
+- [post](https://juejin.cn/post/7062648728405934087?searchId=202411011341473F2BBAB536C1B8041161)
 - [vue-form-generator](https://gitee.com/lafen/vue-form-generator)
