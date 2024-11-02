@@ -18,7 +18,7 @@
   "author": "LAFEN",
   "license": "ISC",
   "devDependencies": {
-    "vitepress": "1.0.0-rc.7"
+    "vitepress": "^1.0.0-rc.7"
   },
   "dependencies": {
     "medium-zoom": "^1.1.0"
