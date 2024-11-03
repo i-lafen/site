@@ -28,7 +28,7 @@
 - 基于 `single-spa`
 - 应用加载： `qiankun` 通过动态创建 `script` 标签方式加载子应用的入口文件，加载完毕会执行子应用暴露出来的生命周期函数
 - 生命周期： 子应用需要暴露 `bootstrap` 、 `mount` 、 `unmount` 三个生命周期
-- 沙箱隔离： `qiankun` 对于 `js` 沙箱 包含 快照沙箱、兼容沙箱、代理沙箱 三种沙箱方案可用，对于不同环境采用不同方案
+- 沙箱隔离： `qiankun` 对于 `js` 沙箱 包含 **快照沙箱**、**兼容沙箱**、**代理沙箱** 三种 沙箱方案可用，对于不同环境采用不同方案
 - 样式隔离： `qiankun` 的样式隔离主要为 `shadow dom` 隔离 以及 `scoped css` 隔离
 - 通信机制： 提供全局通信机制，允许子应用之间进行通信
 
@@ -51,7 +51,7 @@ shadowRoot.innerHTML = '<div id="subapp-container"></div>'
 
 2. `css module`
 
-    对 `style` 元素的 `css` 文本进行处理，在原有选择器上添加属性选择器
+    对 `style` 元素的 `css` 文本进行处理，在原有选择器上添加 属性选择器
 
 
 
@@ -59,17 +59,17 @@ shadowRoot.innerHTML = '<div id="subapp-container"></div>'
 
 `qiankun` 中提供 `3` 种 `js` 沙箱方案
 
-- `SnapshotSanbox` 快照沙箱（单例模式）
+- `SnapshotSanbox` **快照沙箱**（*单例模式*）
   - 子应用 `mount` 时
     - 首先判断是否恢复该子应用环境 `window` ，没有则跳过
     - 然后浅复制主应用的 `window` 快照，用于下次恢复主应用环境
   - 子应用 `unmount` 时
     - 将当前子应用的 `window` 和 上次记录的子应用的快照 `window` 进行 `diff` ，将 `diff` 结果用于下次恢复子应用环境
     - 将上次记录的主应用的 `window` 快照拷贝到主应用的 `window` 上，以此来恢复环境
-- `LegacySanbox` 兼容沙箱（单例模式）
+- `LegacySanbox` **兼容沙箱**（*单例模式*）
   - 使用 `Proxy` 监听，在子应用 新增和修改 `window.xx` 时直接记录 `diff` ，将其用于环境恢复
   - **解决快照沙箱的性能问题**，快照沙箱每次 `diff` 都是全量的，而兼容沙箱不用，所以快照沙箱性能更好
-- `ProxySandbox` 代理沙箱
+- `ProxySandbox` **代理沙箱**
   - 为每个子应用分配一个 `fakeWindow` ，当子应用操作 `window` 时，其实是在 `fakeWindow` 上操作，这样就能实现多应用激活了
   - 子应用在 修改 和 获取 全局属性时，原生属性从全局 `window` 上操作，不是原生属性则优先从 `fakeWindow` 上操作。即 `window.xx` 实际上为 `window.proxy.xx`
 

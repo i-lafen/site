@@ -1,4 +1,4 @@
-# TypeScript 高级用法
+# TypeScript 进阶
 
 
 ## 类型

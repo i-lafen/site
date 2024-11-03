@@ -7,10 +7,10 @@
 
 ## 触发条件
 
-- `position`: absolute/fixed
-- `display`: inline-block/table、flex、flow-root（影响较小）
-- `float`: left/right
-- `overflow` 不为 visible
+- `position`: `absolute/fixed`
+- `display`: `inline-block/table`、`flex`、`flow-root`（影响较小）
+- `float`: `left/right`
+- `overflow` 不为 `visible`
 
 
 ## 排列规则

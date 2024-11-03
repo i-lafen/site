@@ -8,11 +8,11 @@
 
 ### float、position
 
-- 兼容性好但使用繁琐
+- 兼容性好 但 使用繁琐
 
 ### flex
 
-- 使用方便但兼容性较差，移动端使用多
+- 使用方便 但 兼容性略差，移动端使用多
 
 ## flex重要概念
 
@@ -29,98 +29,99 @@
 
 | 属性            | 含义                               |
 | --------------- | ---------------------------------- |
-| display         | 开启 `flex` 布局                     |
-| flex-direction  | 设置主轴方向，默认为`x`轴方向      |
-| justify-content | 置主轴子项的对齐方式               |
-| align-items     | 设置侧轴子项的对齐方式（**单行**） |
-| align-content   | 设置侧轴子项的对齐方式（**多行**） |
-| flex-wrap       | 子元素是否换行                     |
+| `display`         | 开启 `flex` 布局                     |
+| `flex-direction`  | 设置主轴方向，默认为`x`轴方向      |
+| `justify-content` | 置主轴子项的对齐方式               |
+| `align-items`     | 设置侧轴子项的对齐方式（**单行**） |
+| `align-content`   | 设置侧轴子项的对齐方式（**多行**） |
+| `flex-wrap`       | 子元素是否换行                     |
 
-- display
+- `display`
 
   | 属性值 | 含义           |
   | ------ | -------------- |
-  | flex   | 开启 `flex` 布局 |
+  | `flex`   | 开启 `flex` 布局 |
 
-- flex-direction
+- `flex-direction`
 
   | 属性值         | 含义             |
   | -------------- | ---------------- |
-  | row            | 从左到右（默认） |
-  | row-reverse    | 从右到左         |
-  | column         | 从上到下         |
-  | column-reverse | 从下到上         |
+  | `row`            | 从左到右（默认） |
+  | `row-reverse`    | 从右到左         |
+  | `column`         | 从上到下         |
+  | `column-reverse` | 从下到上         |
 
-- justify-content
+- `justify-content`
 
   | 属性值        | 含义                                 |
   | ------------- | ------------------------------------ |
-  | flex-start    | 左对齐（默认）                       |
-  | flex-end      | 右对齐                               |
-  | center        | 水平居中                             |
-  | space-between | 先左右对齐，剩下的子项再平分剩余空间 |
-  | space-around  | 子项平分空间                         |
+  | `flex-start`    | 左对齐（默认）                       |
+  | `flex-end`      | 右对齐                               |
+  | `center`        | 水平居中                             |
+  | `space-between` | 先左右对齐，剩下的子项再平分剩余空间 |
+  | `space-around`  | 子项平分空间                         |
+  | `space-evenly`  | 行内子项平分间隔                     |
 
-- align-item
+- `align-item`
 
   | 属性值     | 含义         |
   | ---------- | ------------ |
-  | flex-start | 上对齐       |
-  | flex-end   | 下对齐       |
-  | center     | 垂直居中对齐 |
+  | `flex-start` | 上对齐       |
+  | `flex-end`   | 下对齐       |
+  | `center`     | 垂直居中对齐 |
 
-- align-content
+- `align-content`
 
   | 属性值        | 含义                               |
   | ------------- | ---------------------------------- |
-  | flex-start    | 上对齐                             |
-  | flex-end      | 下对齐                             |
-  | center        | 垂直居中对齐                       |
-  | space-between | 先上下对齐，剩余的子项平分剩余空间 |
-  | space-around  | 子项平分空间                       |
+  | `flex-start`    | 上对齐                             |
+  | `flex-end`      | 下对齐                             |
+  | `center`        | 垂直居中对齐                       |
+  | `space-between` | 先上下对齐，剩余的子项平分剩余空间 |
+  | `space-around`  | 子项平分空间                       |
 
-- flex-wrap
+- `flex-wrap`
 
   | 属性值 | 含义                                       |
   | ------ | ------------------------------------------ |
-  | nowrap | 不换行（默认），子项超过父项宽度会互相挤压 |
-  | wrap   | 换行                                       |
+  | `nowrap` | 不换行（默认），子项超过父项宽度会互相挤压 |
+  | `wrap`   | 换行                                       |
 
 ### 子项属性
 
-子项属性主要包含以下 3 个
+子项属性主要包含以下 `3` 个
 
 | 子项属性   | 含义                       |
 | ---------- | -------------------------- |
-| align-self | 子项自己在侧轴上的对齐方式 |
-| order      | 子项自己在主轴上的排列顺序 |
-| flex       | 子项占用父项的比例         |
+| `align-self` | 子项自己在侧轴上的对齐方式 |
+| `order`      | 子项自己在主轴上的排列顺序 |
+| `flex`       | 子项占用父项的比例         |
 
-- align-self
+- `align-self`
 
   | 属性值     | 含义     |
   | ---------- | -------- |
-  | flex-start | 上对齐   |
-  | flex-end   | 下对齐   |
-  | center     | 垂直居中 |
+  | `flex-start` | 上对齐   |
+  | `flex-end`   | 下对齐   |
+  | `center`     | 垂直居中 |
 
-- order
+- `order`
 
   | 属性值 | 含义                                                    |
   | ------ | ------------------------------------------------------- |
-  | 0      | 子项自己在主轴上的排列顺序，默认 `0` ，值越小，子项越靠前 |
+  | `0`      | 子项自己在主轴上的排列顺序，默认 `0` ，值越小，子项越靠前 |
 
-- flex
+- `flex`
 
   | 属性值 | 含义                   |
   | ------ | ---------------------- |
-  | 1      | 子项自己占用父项的比例 |
+  | `1`      | 子项自己占用父项的比例 |
 
-  flex: 1 是 flex-grow、flex-shrink、flex-basis 的缩写，默认值是 0 1 auto。
+  `flex: 1` 是 `flex-grow`、`flex-shrink`、`flex-basis` 的缩写，默认值是 `0 1 auto`。
 
-  - flex-grow：放大比例，0 即不放大
-  - flex-shrink：缩小比例，1 即空间不足时缩小
-  - flex-basis：指定了 flex 元素在株主轴方向上的初始大小，auto 表示参照元素的 width 和 hight
+  - `flex-grow`：放大比例，`0` 即不放大
+  - `flex-shrink`：缩小比例，`1` 即空间不足时缩小
+  - `flex-basis`：指定了 `flex` 元素在株主轴方向上的初始大小，`auto` 表示参照元素的 `width` 和 `hight`
 
 ## 注意项
 

@@ -65,13 +65,13 @@
 
 ### 生命周期
 
-- beforeLoad
-- beforeMount
-- afterMount
-- beforeUnmount
-- afterUnmount
-- activated（保活模式）
-- deactivated（保活模式）
+- `beforeLoad`
+- `beforeMount`
+- `afterMount`
+- `beforeUnmount`
+- `afterUnmount`
+- `activated`（保活模式）
+- `deactivated`（保活模式）
 
 
 ### 降级处理
