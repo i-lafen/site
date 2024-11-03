@@ -21,10 +21,10 @@
 
 /* 图片预览 */
 .medium-zoom-overlay {
-  z-index: 20;
+  z-index: 200;
 }
 .medium-zoom-image {
-  z-index: 21;
+  z-index: 210;
 }
 
 /* 滚动条轨道样式 */

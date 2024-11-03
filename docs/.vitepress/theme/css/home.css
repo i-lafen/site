@@ -55,11 +55,11 @@
   background-size: var(--vp-c-bg-size) var(--vp-c-bg-size);
   backdrop-filter: saturate(50%) blur(var(--vp-c-bg-size));
 }
-.VPNav .VPNavBar:not(.has-sidebar):not(.top) {
-  background-color: transparent;
+.VPNav .VPNavBar:not(.has-sidebar):not(.home.top) {
+  background-color: transparent !important;
 }
 .VPNav .VPNavBar:not(.top) .content-body {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 .VPNav .DocSearch-Button {
   background-color: transparent;
