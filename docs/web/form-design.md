@@ -73,7 +73,7 @@ const tagList = [
     // 以下属性会作用到组件和包裹组件上
     field: 'input', // 表单字段名
     props: {}, // 预定义的 el-input 组件属性
-    col: { span: 12 }, // 栅栏布局属性
+    colProps: { span: 12 }, // 栅栏布局属性
     formItemProps: { label: '文本框' }, // 表单属性
   },
 ]
@@ -445,8 +445,7 @@ const getStyle = () => {
     #print-container { display: none; }
     @media print {
       body > :not(.print-container) { display: none; }
-      html,
-      body { display: block !important; }
+      html, body { display: block !important; }
       #print-container { display: block; }
     }
   `
