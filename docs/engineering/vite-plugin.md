@@ -230,7 +230,7 @@ export default defineConfig({
 - 创建 `link` 标签，并添加 `rel=preload` 属性，追加到 `head` 标签尾部
 
 ```js
-// @/plugin/vite-plugin-images-preload.js
+// @/plugin/vite-plugin-image-preload.js
 import fg from 'fast-glob'
 import { normalizePath } from 'vite'
 
