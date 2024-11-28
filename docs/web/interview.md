@@ -412,9 +412,9 @@ setTimeout(() => resolve('获取到的数据'), 1000)
 例如开发一个自动记录上次构建时间的 `vite` 插件，该插件每次构建都会将构建时间以注释方式插入到 `index.html` 中的 `body` 标签下，方便开发者在查看页面元素时可以知道上次构建时间，当然也可以插入一些其他的信息
 
 ```js
-const injectBuildTime = () => {
+const vitePluginInjectBuildTime = () => {
   return {
-    name: 'inject-build-time',
+    name: 'vite-plugin-inject-build-time',
     transformIndexHtml(html) {
       const now = new Date().toLocaleString()
       return html.replace(

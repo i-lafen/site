@@ -131,17 +131,25 @@ console.log(timestamp) // 拿到虚拟模块输出内容
 - `return` 的对象要有 `name` 属性
 - 返回的对象中使用合适的钩子即可
 
+
+
 ### 插件 Demo
 
-简单利用 `vite` 来开发一个插件，用于在浏览器中打印一段文字，类似于某些网站的控制台打印的功能。
+通过几个常见的示例来学习如何开发一个 `vite` 插件
+
+
+#### 打印输出日志插件
+
+
+简单利用 `vite` 来开发一个插件，用于在浏览器中打印一段文字，类似于某些网站的控制台打印的功能
 
 ```js
-// plugins > logPlugin.js
-export const logPlugin = () => {
-  console.log('logPlugin start')
+// @/plugins/vite-plugin-log.js
+export const vitePluginLog = () => {
+  console.log('plugin start')
   return {
     // 插件名
-    name: 'log-plugin',
+    name: 'vite-plugin-log',
     // 直接给 main.js 文件添加一段代码，或者直接在 transformIndexHtml 钩子中添加脚本也可
     transform(code, id) {
       if (id.endsWith('main.js')) {
@@ -156,28 +164,28 @@ export const logPlugin = () => {
 }
 ```
 
-在 `vite.config.js` 中调用插件
+在 `vite.config.js` 中使用插件
 
 ```js
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-
-import { logPlugin } from '@/plugins/logPlugins'
+import { vitePluginLog } from 'src/plugins/vite-plugin-log'
 
 export default defineConfig({
-  plugins: [vue(), logPlugin()], // 使用插件
+  plugins: [vue(), vitePluginLog()], // 使用插件
 })
 ```
 
 到此即可在项目打包完毕后，将代码插入到项目中，打开浏览器控制台即可看到输出的内容。
 
+
+#### 注入构建时间戳插件
+
 再或者，开发者想在项目页面注释中能够方便的看到上次构建的时间，则可以自定义如下插件，将构建时间插入到页面中，当然也可以是其他信息
 
 ```ts
-// plugins/injectBuildTime.js
-export const injectBuildTime = () => {
+// @/plugins/vite-plugin-inject-build-time.js
+export const vitePluginInjectBuildTime = () => {
   return {
-    name: 'inject-build-time',
+    name: 'vite-plugin-inject-build-time',
     transformIndexHtml(html) {
       const now = new Date().toLocaleString()
       return html.replace(
@@ -189,25 +197,82 @@ export const injectBuildTime = () => {
 }
 ```
 
-然后在 `vite.config.js` 中调用插件即可
+在 `vite.config.js` 中使用插件
 
 ```js
-import { injectBuildTime } from '@/plugins/injectBuildTime'
+import { vitePluginInjectBuildTime } from 'src/plugins/vite-plugin-inject-build-time'
 
 export default defineConfig({
-  plugins: [vue(), injectBuildTime()], // 使用插件
+  plugins: [vue(), vitePluginInjectBuildTime()], // 使用插件
 })
 ```
 
-然后就可在 `html` 中查看到该时间备注了
+然后就可在 `html` 中查看到该时间注释了
 
 ```html
 <!doctype html>
 <html lang="en">
-  <body><!-- Last Build Time 2024/9/14 01:37:59 -->
+  <body>
+    <!-- Last Build Time 2024/9/14 01:37:59 -->
     <div id="root"></div>
   </body>
 </html>
+```
+
+
+#### 静态资源预加载插件
+
+静态资源预加载，通过 `link` 的 `rel=preload` 的资源提示符，提前加载资源，减少白屏时间，优化用户体验
+
+以 `@/assets/images` 静态图片为例，其中可能包含多张系统背景大图、看板大图等静态资源
+
+- 使用 `fast-glob` 包来批量获取图片文件名，根据 `vite.config.js` 的 `base` 等参数拼接完整路径
+- 创建 `link` 标签，并添加 `rel=preload` 属性，追加到 `head` 标签尾部
+
+```js
+// @/plugin/vite-plugin-images-preload.js
+import fg from 'fast-glob'
+import { normalizePath } from 'vite'
+
+// 静态图片资源 预加载 vite 插件
+export const vitePluginImagePreload = (config = {}) => {
+  const defaultConfig = {
+    cwd: 'src/assets/images/',
+    match: '*.{jpg,png}',
+    injectTo: 'head',
+  }
+  const mergedConfig = { ...defaultConfig, ...config }
+  const { cwd, match, injectTo } = mergedConfig
+  return {
+    name: 'vite-plugin-image-preload',
+    transformIndexHtml(_html, ctx) {
+      const { base } = ctx.server.config
+      const files = fg.sync(match, { cwd })
+      const links = files.map(fileName => {
+        return {
+          tag: 'link',
+          injectTo,
+          attrs: {
+            rel: 'preload',
+            as: 'image',
+            href: normalizePath(base + cwd + fileName)
+          }
+        }
+      })
+      return links
+    }
+  }
+}
+```
+
+在 `vite.config.js` 中使用插件
+
+```js
+import { vitePluginImagePreload } from 'src/plugins/vite-plugin-image-preload'
+
+export default defineConfig({
+  plugins: [vue(), vitePluginImagePreload()]
+})
 ```
 
 
