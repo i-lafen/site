@@ -275,6 +275,9 @@ export default defineConfig({
 })
 ```
 
+静态图片预加载示例可以尝试 [fabric-editor](https://gitee.com/lafen/fabric-editor-demo)
+
+
 
 ### 可能有的坑
 
