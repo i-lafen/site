@@ -432,6 +432,32 @@ export default defineConfig({
 ```
 
 
+### 网站更新提示刷新
+
+
+一种思路就是每次构建时使用插件生成一个 版本号 或者 `hash` 号 到根目录文件中，例如 `version.json`
+
+```json
+{
+  "verson": "1.0.2"
+}
+```
+
+然后向 `html` 中注入脚本文件，在脚本中使用 `fetch` 定时请求 `version.json` 文件，与本地的版本号进行对比，如果版本号不一致则提示用户刷新
+
+
+- 生成版本号到 `version.json` ，并向 `html` 中注入脚本文件
+- 在脚本中获取当前版本号，可以从 全局变量 中或 本地存储 中获取，取决于你如何存放当前版本号
+- `setInterval` 设置定时 轮询 版本号与本地版本号进行对比
+- 在标签页 `visiblilitychange` 和 `focus` 时也进行获取版本号对比操作
+- 版本不一致则提示用户刷新
+
+
+可以使用插件来完成 [plugin-web-update-notification](https://github.com/GreatAuk/plugin-web-update-notification)
+
+
+
+
 ### 虚拟 dom
 
 描述 `dom` 结构的 `js` 对象，相比于真实 `dom` ，更加轻便，对于需要频繁更新的 `dom` 结构，使用 虚拟 `dom` 更能体现其快速更新能力。
